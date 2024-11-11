@@ -225,6 +225,7 @@ int main(){
               
         // Задание 3
         case 3:
+            print_matrix(numm, column, a);
             for(int i = 0; i < numm; i++) {
                 a[0][0] = 0;
                 a[i+1][i+1] = 0;
@@ -244,8 +245,7 @@ int main(){
                     }
                 }
             }
-            print_matrix(numm, column, a);
-            printf("%d\n", sum);
+            printf("Cумма элементов в четвертой области равна: %d\n", sum);
         }
     return 0;
 }
