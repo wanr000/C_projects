@@ -19,7 +19,6 @@ int start(int unit){
 }
 
 int start_1(char b){
-    
     printf("Матрица заполняется случайными числами(a), вводимыми(b) или из файла(c): ");
     while (1) {
         scanf(" %c", &b);
