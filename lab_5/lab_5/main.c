@@ -1,5 +1,7 @@
+#include <stdio.h>
 
-//  Created by Роман on 11.11.24.
-//
-
-
+int main(){
+    
+    
+    return 0;
+}

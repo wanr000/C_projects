@@ -83,7 +83,7 @@ int first_str(int a[], int columns){
     return 1;
 }
 
-int first_str_1(double a[], int columns){
+int first_str_1(int a[], int columns){
     for (int i = 1; i < columns; i++){
         if (a[i] > a[i-1]){
             return 0;
@@ -190,7 +190,7 @@ int main(){
             
             count2=0; int count3 = 0;
             for (int i = 0; i < numm; i++){
-                if(first_str(a[i], column)){
+                if(first_str_1(a[i], column)){
                     count2=i;
                     count3 = 1;
                     break;
