@@ -91,6 +91,20 @@ int first_str_1(int a[], int columns){
     return 1;
 }
 
+int sum_matrix(int numm, int column, int n1, int n2, int a[][100]){
+    int sum = 0;
+    for(int i = 0; i < numm; i++) {
+        for(int j = 0; j < column ; j++){
+            if(i-j==n1 || i+j == n2){
+                break;
+            }
+            else{
+                sum += a[i][j];
+            }
+        }
+    }
+    return sum;
+}
 
 int main(){
     int a[100][100]={0}, c[100]={0}, m_r = -1, a_1=0, numm=0, column=0, unit=0;
@@ -225,26 +239,25 @@ int main(){
         // Задание 3
         case 3:
             print_matrix(numm, column, a);
-            for(int i = 0; i < numm; i++) {
-                a[0][0] = 0;
-                a[i+1][i+1] = 0;
-            }
-            for(int i = numm; 0 < i; i--) {
-                a[0][numm-1] = 0;
-                a[numm-i][i-1] = 0;
-            }
-            int sum = 0;
-            for(int i = 0; i < numm; i++) {
-                for(int j = 0; j < column ; j++){
-                    if(a[i][j] == 0){
-                        break;
-                    }
-                    else{
-                        sum += a[i][j];
-                    }
+
+            printf("При подсчете суммы учитывать элементы на диагоналях матрицы(a) или нет(b): ");
+            while (1) {
+                scanf(" %c", &b);
+                if (b == 'a' || b == 'b') {
+                    break;
+                }
+                else {
+                    printf("Введен некоретный символ, введите еще раз: ");
+                    while (getchar() != '\n');
                 }
             }
-            printf("Cумма элементов в четвертой области равна: %d\n", sum);
+            
+            if(b=='a'){
+                printf("Cумма элементов в четвертой области равна: %d\n", sum_matrix(numm, column, 1, numm, a));
+            }
+            if(b=='b'){
+                printf("Cумма элементов в четвертой области равна: %d\n", sum_matrix(numm, column, 0, numm-1, a));
+            }
         }
     return 0;
 }
