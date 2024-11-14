@@ -7,7 +7,9 @@
 int start(int unit){
     printf("Введите номер задания, которое необходимо запустить: ");
     while (1) {
-        if (scanf("%d", &unit) == 1 && unit >= 1 && unit <= 3) {
+        int n;
+        n = scanf("%d", &unit);
+        if (n == 1 && unit >= 1 && unit <= 3) {
             break;
         }
         else {
@@ -21,8 +23,9 @@ int start(int unit){
 int start_1(char b){
     printf("Матрица заполняется случайными числами(a), вводимыми(b) или из файла(c): ");
     while (1) {
-        scanf(" %c", &b);
-        if (b == 'a' || b == 'b' || b == 'c') {
+        char sym;
+        sym = scanf(" %c", &b);
+        if (sym == 1 && (b == 'a' || b == 'b' || b == 'c')) {
             break;
         }
         else {
@@ -37,7 +40,7 @@ int start_2(int numm){
     printf("Введите количество строк матрицы: ");
     while (1) {
         n = scanf("%d", &numm);
-        if (n == 1 && numm >= 1) {
+        if (n == 1 && numm >= 1 && numm <100) {
             break;
         }
         else {
@@ -52,7 +55,7 @@ int start_3(int column){
     printf("Введите количество столбцев матрицы: ");
     while (1) {
         n = scanf("%d", &column);
-        if (n == 1 && column >= 1) {
+        if (n == 1 && column >= 1 && column < 100) {
             break;
         }
         else {
