@@ -40,7 +40,8 @@ int start_2(int numm){
     printf("Введите количество строк матрицы: ");
     while (1) {
         n = scanf("%d", &numm);
-        if (n == 1 && numm >= 1 && numm <100) {
+        if (n == 1 && numm >= 1 && numm <100
+            ) {
             break;
         }
         else {
