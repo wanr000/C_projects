@@ -89,7 +89,6 @@ int main(){
     }
     
 
-    
     if(b == 'a'){
         FILE *file = fopen("array.txt", "w");
         srand(time(NULL));
@@ -144,6 +143,8 @@ int main(){
     
     printf("Исходный массив: \n");
     print_arr2(n, m, array);
+    
+    
     
     
     
