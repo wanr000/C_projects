@@ -3,12 +3,10 @@
 #include <string.h>
 #include <time.h>
 #include <ctype.h>
-#include <math.h>
 #include "functions.h"
 
 //// Задание 1
 //int main(){
-//    // Удалить целые числа в одномерном массиве
 //    char b = start_1(b);
 //    int n = start_2(n);
 //    double * a = malloc(n * sizeof(double));
@@ -76,6 +74,7 @@
 //            
 //    return 0;
 //}
+
 
 //// Задание 2
 //int main(){
@@ -157,91 +156,104 @@
 //
 //    return 0;
 //}
-//
 
-//
-//// Задание 3
-//int main(){
-//    // Продублировать нечетный элемент в каждой четной строке,в каждой строке последний элемент равен (-100)
-//    char b = start_1(b);
-//    int n = start_22(n);
-//    int m = start_23(m);
-//    
-//    double ** array = (double**) calloc(n, sizeof(double*));
-//    for (int i = 0; i < n; i++) {
-//        array[i] = (double*) calloc(m, sizeof(double));
-//    }
-//    
-//
-//    if(b == 'a'){
-//        FILE *file = fopen("array.txt", "w");
-//        srand(time(NULL));
-//        for(int k=0;k<n; k++){
-//            for(int j=0;j<m; j++){
-//                int r = (0 + rand()%2);
-//                if (r==1){
-//                    array[k][j] = (-20 + rand()%100);
-//                    fprintf(file, "%.2lf  ", array[k][j]);
-//                }
-//                else{
-//                    array[k][j] = (-20.3 + rand()%100);
-//                    fprintf(file, "%.2lf  ", array[k][j]);
-//                }
-//                array[k][m-1]=-100;
-//            }
-//            fprintf(file, "\n");
-//        }
-//        fclose(file);
-//    }
-//    else if(b == 'b'){
-//        // Задаем свои элементы массива
-//        FILE *file = fopen("array.txt", "w");
-//        int nms;
-//        for(int k=0;k<n;k++){
-//            for(int j=0;j<m;j++){
-//                while (1) {
-//                    nms = scanf("%lf", &array[k][j]);
-//                    if (nms == 1) {
-//                        break;
-//                    }
-//                    else {
-//                        printf("Введен некорректный символ, введите еще раз: ");
-//                        while (getchar() != '\n');
-//                    }
-//                    array[k][m-1]=-100;
-//                }
-//                fprintf(file, "%.2lf  ", array[k][j]);
-//            }
-//            fprintf(file, "\n");
-//        }
-//        fclose(file);
-//    }
-//    else if(b == 'c'){
-//        FILE *file = fopen("array.txt", "r");
-//        for(int k=0;k<n; k++){
-//            for(int j=0;j<m; j++){
-//                fscanf(file, "%lf", &array[k][j]);
-//            }
-//            fprintf(file, "\n");
-//        }
-//        fclose(file);
-//    }
-//    
-//    printf("Исходный массив: \n");
-//    print_arr2(n, m, array);
-//    
-//    
-//    
-//
-//    
-//    
-//    printf("\nИзмененный массив: \n");
-//    print_arr2(n, m, array);
-//    
-//    for(int i = 0; i < n; i++) {
-//        free(array[i]);
-//    }
-//    free(array);
-//    
-//    return 0;
-//}
+
+
+// Задание 3
+int main(){
+    // Продублировать нечетный элемент в каждой четной строке,в каждой строке последний элемент равен (-100)
+    char b = start_1(b);
+    int n = start_22(n);
+    int m = start_23(m);
+    
+    int ** array = (int**) calloc(n, sizeof(int*));
+    int * cols = (int*)malloc(n * sizeof(int));
+    for (int i = 0; i < n; i++) {
+        array[i] = (int*) calloc(m, sizeof(int));
+        cols[i] = m;
+    }
+    
+
+    if(b == 'a'){
+        FILE *file = fopen("array.txt", "w");
+        srand(time(NULL));
+        for(int k=0;k<n; k++){
+            for(int j=0;j<m; j++){
+                array[k][j] = (-20 + rand()%100);
+                fprintf(file, "%d  ", array[k][j]);
+                array[k][m-1]=-100;
+            }
+            fprintf(file, "\n");
+        }
+        fclose(file);
+    }
+    else if(b == 'b'){
+        // Задаем свои элементы массива
+        FILE *file = fopen("array.txt", "w");
+        int nms;
+        for(int k=0;k<n;k++){
+            for(int j=0;j<m;j++){
+                while (1) {
+                    nms = scanf("%d", &array[k][j]);
+                    if (nms == 1) {
+                        break;
+                    }
+                    else {
+                        printf("Введен некорректный символ, введите еще раз: ");
+                        while (getchar() != '\n');
+                    }
+                }
+                array[k][m-1]=-100;
+                fprintf(file, "%d  ", array[k][j]);
+            }
+            fprintf(file, "\n");
+        }
+        fclose(file);
+    }
+    else if(b == 'c'){
+        FILE *file = fopen("array.txt", "r");
+        for(int k=0;k<n; k++){
+            for(int j=0;j<m; j++){
+                fscanf(file, "%d", &array[k][j]);
+            }
+            fprintf(file, "\n");
+        }
+        fclose(file);
+    }
+    
+    printf("Исходный массив: \n");
+    print_arr3(n, cols, array);
+    
+    
+    for(int i = 0; i < n; i++) {
+        if((i+1)%2==0){
+            int originals_cols = cols[i];
+            for(int j = 0; j < originals_cols; j++){
+                if(array[i][j]%2!=0){
+                    cols[i]++;
+                    array[i] = (int *)realloc(array[i], cols[i] * sizeof(int));
+                    
+                    for(int k=cols[i]-1; k > j; k--){
+                        array[i][k] = array[i][k-1];
+                    }
+                    
+                    array[i][j+1] = array[i][j];
+                    j++;
+                }
+            }
+
+        }
+    }
+
+    
+    printf("\nИзмененный массив: \n");
+    print_arr3(n, cols, array);
+    
+    for(int i = 0; i < n; i++) {
+        free(array[i]);
+    }
+    free(array);
+    free(cols);
+    
+    return 0;
+}

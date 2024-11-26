@@ -108,3 +108,11 @@ void print_arr2(int n, int *m, double ** a){
     }
 }
 
+void print_arr3(int n, int *m, int ** a){
+    for(int i =0; i < n; i++){
+        for(int j = 0; j < m[i]; j++){
+            printf("%d  ", a[i][j]);
+        }
+        printf("\n");
+    }
+}
