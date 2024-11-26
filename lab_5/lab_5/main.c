@@ -27,9 +27,8 @@
 //            }
 //        }
 //        fclose(file);
-//        }
+//    }
 //    else if(b == 'b'){
-//        // Задаем свои элементы массива
 //        FILE *file = fopen("array.txt", "w");
 //        int nms;
 //        for(int k=0;k<n;k++){
@@ -78,7 +77,6 @@
 
 //// Задание 2
 //int main(){
-//    // Удалить элементы на побочной диагонали в матрице
 //    char b = start_1(b);
 //    int n = start_22(n);
 //    int m = start_23(m);
@@ -107,7 +105,8 @@
 //            fprintf(file, "\n");
 //        }
 //        fclose(file);
-//    } else if (b == 'b') {
+//    }
+//    else if (b == 'b') {
 //        FILE *file = fopen("array.txt", "w");
 //        for (int k = 0; k < n; k++) {
 //            for (int j = 0; j < m; j++) {
@@ -120,7 +119,8 @@
 //            fprintf(file, "\n");
 //        }
 //        fclose(file);
-//    } else if (b == 'c') {
+//    }
+//    else if (b == 'c') {
 //        FILE *file = fopen("array.txt", "r");
 //        for (int k = 0; k < n; k++) {
 //            for (int j = 0; j < m; j++) {
@@ -133,7 +133,6 @@
 //    printf("Исходный массив:\n");
 //    print_arr2(n, cols, array);
 //
-//    // Удаление элементов на побочной диагонали и сокращение размера строки
 //    for (int i = 0; i < n; i++) {
 //        int diagIndex = m - 1 - i;
 //        if (diagIndex >= 0 && diagIndex < m) {
@@ -161,7 +160,6 @@
 
 //// Задание 3
 //int main(){
-//    // Продублировать нечетный элемент в каждой четной строке,в каждой строке последний элемент равен (-100)
 //    char b = start_1(b);
 //    int n = start_22(n);
 //    int m = start_23(m);
@@ -188,7 +186,6 @@
 //        fclose(file);
 //    }
 //    else if(b == 'b'){
-//        // Задаем свои элементы массива
 //        FILE *file = fopen("array.txt", "w");
 //        int nms;
 //        for(int k=0;k<n;k++){
