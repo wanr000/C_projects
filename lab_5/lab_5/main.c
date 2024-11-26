@@ -46,7 +46,7 @@
 //            fprintf(file, "%.2lf  ", a[k]);
 //            }
 //            fclose(file);
-//        }
+//    }
 //    else if(b == 'c'){
 //        FILE *file = fopen("array.txt", "r");
 //        for(int k=0;k<n; k++){
