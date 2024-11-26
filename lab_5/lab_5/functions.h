@@ -93,15 +93,15 @@ int start_23(int column){
     return column;
 }
 
-void print_arr(double a[], int n){
+void print_arr(double * a, int n){
     for(int i = 0; i < n; i++)
         printf("%.1lf  ", a[i]);
     printf("\n");
 }
 
-void print_arr2(int n, int m, double a[][m]){
-    for(int i = 1; i < n+1; i++){
-        for(int j = 0; j < m; j++){
+void print_arr2(int n, int *m, double ** a){
+    for(int i =0; i < n; i++){
+        for(int j = 0; j < m[i]; j++){
             printf("%.1lf  ", a[i][j]);
         }
         printf("\n");
