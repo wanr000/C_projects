@@ -1,8 +1,3 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-
-
 int isValidInput(const char *input){
     while (*input){
         if (!isdigit(*input)){
@@ -173,11 +168,13 @@ void shell_sort_columns(int **matrix, int rows, int cols) {
 
     for (int gap = cols / 2; gap > 0; gap /= 2) {
         for (int i = gap; i < cols; i++) {
+            
             int temp_max = max_values[i];
             int *temp_col = (int*)malloc(rows * sizeof(int));
             for (int k = 0; k < rows; k++) {
                 temp_col[k] = matrix[k][i];
             }
+            
             int j;
             for (j = i; j >= gap && max_values[j - gap] < temp_max; j -= gap) {
                 max_values[j] = max_values[j - gap];
@@ -185,6 +182,7 @@ void shell_sort_columns(int **matrix, int rows, int cols) {
                     matrix[k][j] = matrix[k][j - gap];
                 }
             }
+            
             max_values[j] = temp_max;
             for (int k = 0; k < rows; k++) {
                 matrix[k][j] = temp_col[k];
