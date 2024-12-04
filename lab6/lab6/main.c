@@ -129,7 +129,6 @@ void task2(){
 }
 
 
-// Задание 2
 int main(){
     printf("Выберите задание: ");
     int task = choice_task(task);
