@@ -168,7 +168,6 @@ void shell_sort_columns(int **matrix, int rows, int cols) {
 
     for (int gap = cols / 2; gap > 0; gap /= 2) {
         for (int i = gap; i < cols; i++) {
-            
             int temp_max = max_values[i];
             int *temp_col = (int*)malloc(rows * sizeof(int));
             for (int k = 0; k < rows; k++) {
