@@ -48,7 +48,7 @@ void remove_extra_spaces(const char *input, char **output) {
         len--;
     }
 
-    *output = (char *)malloc((len + 1) * sizeof(char));
+    *output = (char *)malloc((len + 1));
     if (*output == NULL) {
         fprintf(stderr, "Memory allocation failed\n");
         exit(1);
