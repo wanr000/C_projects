@@ -83,6 +83,10 @@ void task2(){
     free(S0);
 }
 
+void task3(){
+    
+}
+
 
 int main(){
     printf("Выберите задание: ");
@@ -95,6 +99,10 @@ int main(){
         }
         if (task == 2){
             task2();
+            break;
+        }
+        if (task == 3){
+            task3();
             break;
         }
         else{

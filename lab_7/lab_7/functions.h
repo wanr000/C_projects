@@ -50,11 +50,6 @@ void remove_extra_spaces(const char *input, char **output) {
     }
 
     *output = (char *)malloc((len + 1));
-    if (*output == NULL) {
-        fprintf(stderr, "Memory allocation failed\n");
-        exit(1);
-    }
-
     src = input;
     char *dest = *output;
     in_word = 0;
