@@ -13,8 +13,8 @@ void task1(){
 
     char *result = NULL;
 
-    void (*remove_spaces_ptr)(const char *, char **) = &remove_extra_spaces;
-    remove_spaces_ptr(str, &result);
+    
+    remove_extra_spaces(str, &result);
 
     printf("Исходная строка: \"%s\"\n", str);
     printf("Обработанная строка: \"%s\"\n", result);

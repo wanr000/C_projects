@@ -14,30 +14,6 @@ int start_1(char b){
 }
 
 
-void print_arr(int * a, int n){
-    for(int i = 0; i < n; i++)
-        printf("%d  ", a[i]);
-    printf("\n");
-}
-
-void print_arr2(int n, int *m, double ** a){
-    for(int i =0; i < n; i++){
-        for(int j = 0; j < m[i]; j++){
-            printf("%.1lf  ", a[i][j]);
-        }
-        printf("\n");
-    }
-}
-
-void print_arr3(int n, int m, int ** a){
-    for(int i =0; i < n; i++){
-        for(int j = 0; j < m; j++){
-            printf("%d  ", a[i][j]);
-        }
-        printf("\n");
-    }
-}
-
 int choice_task(int task){
     while (1) {
         char t;
