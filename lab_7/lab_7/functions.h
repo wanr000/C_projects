@@ -37,7 +37,8 @@ void remove_extra_spaces(const char *input, char **output) {
         if (!isspace((unsigned char)*src)) {
             len++;
             in_word = 1;
-        } else if (in_word) {
+        }
+        else if (in_word) {
             len++;
             in_word = 0;
         }
