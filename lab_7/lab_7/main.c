@@ -4,7 +4,7 @@
 #include "functions.h"
 
 // Задание 1
-void task1(){
+void task1(void){
     char *str = NULL;
     size_t size = 0;
 
@@ -13,10 +13,9 @@ void task1(){
 
     char *result = NULL;
 
+    printf("Исходная строка: \"%s\"\n", str);
     
     remove_extra_spaces(str, &result);
-
-    printf("Исходная строка: \"%s\"\n", str);
     printf("Обработанная строка: \"%s\"\n", result);
 
     free(result);
@@ -24,7 +23,7 @@ void task1(){
 }
 
 // Задание 2
-void task2(){
+void task2(void){
     // Ввод строк
     char *S = NULL;
     char *S0 = NULL;
@@ -83,14 +82,11 @@ void task2(){
     free(S0);
 }
 
-void task3(){
-    
-}
 
-
-int main(){
+int main(void){
     printf("Выберите задание: ");
-    int task = choice_task(task);
+    int task = 0;
+    task = choice_task(task);
     
     while (1) {
         if (task == 1){
@@ -99,10 +95,6 @@ int main(){
         }
         if (task == 2){
             task2();
-            break;
-        }
-        if (task == 3){
-            task3();
             break;
         }
         else{

@@ -49,12 +49,12 @@ void remove_extra_spaces(const char *input, char **output) {
         len--;
     }
 
-    *output = (char *)malloc((len + 1));
+    *output = malloc((len + 1));
     src = input;
     char *dest = *output;
     in_word = 0;
     while (*src) {
-        if (!isspace((unsigned char)*src)) {
+        if (!isspace(*src)) {
             *dest++ = *src;
             in_word = 1;
         } else if (in_word) {
@@ -92,12 +92,9 @@ void insert_chars(const char *S, const char *S0, char **result, int a, int b) {
 
 
     int new_len = len_S0 + b;
-    *result = (char *)malloc((new_len + 1) * sizeof(char));
+    *result = malloc((new_len + 1));
 
-    if (*result == NULL) {
-        fprintf(stderr, "Memory allocation failed\n");
-        exit(1);
-    }
+    
 
     // Копирование символов из S0 до a-го
     for (int i = 0; i < a+1; i++) {
