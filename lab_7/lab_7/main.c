@@ -4,6 +4,7 @@
 #include "functions.h"
 
 // Задание 1
+// Дана строка. Удалить из нее все лишние пробелы. Между словами оставить только по одному пробелу.
 void task1(void){
     char *str = NULL;
     size_t size = 0;
@@ -23,6 +24,7 @@ void task1(void){
 }
 
 // Задание 2
+// Даны два числа a, b и строки S, S0. Вставить b символов строки S в строку S0 начиная с a-го индекса
 void task2(void){
     // Ввод строк
     char *S = NULL;
@@ -82,6 +84,11 @@ void task2(void){
     free(S0);
 }
 
+// Задание 3
+// Отсортировать методом Хоара массив строк по убыванию длины строки
+void task3(void){
+    
+}
 
 int main(void){
     printf("Выберите задание: ");
@@ -95,6 +102,10 @@ int main(void){
         }
         if (task == 2){
             task2();
+            break;
+        }
+        if (task == 3){
+            task3();
             break;
         }
         else{
