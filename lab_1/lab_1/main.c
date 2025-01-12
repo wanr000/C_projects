@@ -1,11 +1,21 @@
 // Задание 1.
 #include <stdio.h>
 #include <math.h>
+#include "functions.h"
 void task1(void) {
     double rad, len, height, area, area_f, vol;
-    printf("Введите радиус, длину ребра и высоту конуса:\n");
+    char b;
+    printf("Введите радиус, длину ребра и высоту конуса: ");
 
-    scanf("%lf%lf%lf", &rad, &len, &height);
+    while (1) {
+        if(scanf("%lf%lf%lf%c", &rad, &len, &height, &b) == 4 && b=='\n' && rad > 0 && len > 0 && height >0){
+            break;
+        }
+        else {
+            printf("Некорректный ввод. Повторите еще раз: ");
+            while (getchar() != '\n');
+        }
+    }
     area = M_PI*rad*len;
     area_f = area + M_PI*rad*rad;
     vol = 1./3*height*M_PI*rad*rad;
@@ -15,8 +25,18 @@ void task1(void) {
 // Задание 2.
 void task2(void) {
     double a, b, c;
-    printf("Введите длины сторон треугольника a, b и c:\n");
-    scanf("%lf%lf%lf", &a, &b, &c);
+    char t;
+    printf("Введите длины сторон треугольника a, b и c: ");
+    while (1) {
+        if(scanf("%lf%lf%lf%c", &a, &b, &c, &t) == 4 && t=='\n' && a > 0 && b > 0 && c > 0){
+            break;
+        }
+        else {
+            printf("Некорректный ввод. Повторите еще раз: ");
+            while (getchar() != '\n');
+        }
+    }
+    
     if (a==b || b==c || a==c) {
         printf("Равнобедренный треугольник\n");
     }
@@ -29,10 +49,28 @@ void task2(void) {
 void task3(void) {
     float X;
     int unit;
+    char b, c;
     printf("Введите длину: ");
-    scanf("%f", &X);
+    while (1) {
+        if(scanf("%f%c", &X, &b) == 2 && b=='\n' && X > 0){
+            break;
+        }
+        else {
+            printf("Некорректный ввод. Повторите еще раз: ");
+            while (getchar() != '\n');
+        }
+    }
     printf("Выберите единицу измерения:\n1 - Дециметры\n2 -Километры\n3 - Метры\n4 - Миллиметры\n5 - Сантиметры\n");
-    scanf("%d", &unit);
+    while (1) {
+        if(scanf("%d%c", &unit, &c) == 2 && c=='\n' && unit < 6 &&  unit> 0){
+            break;
+        }
+        else {
+            printf("Некорректный ввод. Повторите еще раз: ");
+            while (getchar() != '\n');
+        }
+    }
+    
     switch(unit) {
         case 1:
             X = X / 10;
@@ -48,7 +86,6 @@ void task3(void) {
             X = X / 100;
             break;
         default:
-            printf("Неправильный выбор единицы измерения!\n");
             break;
     }
     printf("Длина в метрах: %.3f\n", X);
@@ -57,32 +94,28 @@ void task3(void) {
 
 int main(void){
     int task;
-    char b;
     
     printf("Выберите задание для проверки: ");
     
-    while (1) {
-        if(scanf("%d%c",&task, &b) == 2 && b=='\n' && task < 4 && task > 0){
-            break;
-        }
-        else {
-            printf("Некорректный ввод. Повторите еще раз: ");
-            while (getchar() != '\n');
-        }
-        
-    }
+    task = choice_task(task);
     
-    switch(task){
-        case 1:
+    while (1) {
+        if (task == 1){
             task1();
-            break;
-        case 2:
+            break;;
+        }
+        if (task == 2){
             task2();
             break;
-        case 3:
+        }
+        if (task == 3){
             task3();
             break;
-        default:
-            return 0;
+        }
+        else{
+            printf("Неверный номер задания. Попробуйте еще раз: ");
+            task = choice_task(task);
+        }
     }
+ 
 }
