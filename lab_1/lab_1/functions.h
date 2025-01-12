@@ -88,7 +88,7 @@ void task3(void) {
     printf("Длина в метрах: %.3f\n", X);
 }
 
-// Дополнительные функции
+// Основные функции
 int choice_task(int task){
     while (1) {
         char b;
