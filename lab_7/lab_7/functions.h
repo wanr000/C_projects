@@ -143,7 +143,8 @@ void quicksort(char **arr, int low, int high, int (*cmp)(const char *, const cha
 
 int compare_length(const char *a, const char *b) {
     int len_a = string_length(a);
-    int len_b = string_length(b);
+    int len_b = string
+    _length(b);
     return len_a - len_b;
 }
 
