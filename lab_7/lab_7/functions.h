@@ -114,3 +114,36 @@ void insert_chars(const char *S, const char *S0, char **result, int a, int b) {
     (*result)[new_len] = '\0';
 }
 
+void swap(char **a, char **b) {
+    char *temp = *a;
+    *a = *b;
+    *b = temp;
+}
+
+int partition(char **arr, int low, int high, int (*cmp)(const char *, const char *)) {
+    char *pivot = arr[high];
+    int i = low - 1;
+    for (int j = low; j < high; j++) {
+        if (cmp(arr[j], pivot) > 0) {
+            i++;
+            swap(&arr[i], &arr[j]);
+        }
+    }
+    swap(&arr[i + 1], &arr[high]);
+    return i + 1;
+}
+
+void quicksort(char **arr, int low, int high, int (*cmp)(const char *, const char *)) {
+    if (low < high) {
+        int pi = partition(arr, low, high, cmp);
+        quicksort(arr, low, pi - 1, cmp);
+        quicksort(arr, pi + 1, high, cmp);
+    }
+}
+
+int compare_length(const char *a, const char *b) {
+    int len_a = string_length(a);
+    int len_b = string_length(b);
+    return len_a - len_b;
+}
+

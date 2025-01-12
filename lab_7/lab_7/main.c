@@ -2,97 +2,15 @@
 #include <stdlib.h>
 #include <ctype.h>
 #include "functions.h"
+#include "task1.h"
+#include "task2.h"
+#include "task3.h"
 
-// Задание 1
-// Дана строка. Удалить из нее все лишние пробелы. Между словами оставить только по одному пробелу.
-void task1(void){
-    char *str = NULL;
-    size_t size = 0;
 
-    printf("Введите строку: ");
-    getline(&str, &size, stdin);
-
-    char *result = NULL;
-
-    printf("Исходная строка: \"%s\"\n", str);
+void start(void){
+    int task;
+    printf("Выберите задание для проверки: ");
     
-    remove_extra_spaces(str, &result);
-    printf("Обработанная строка: \"%s\"\n", result);
-
-    free(result);
-    free(str);
-}
-
-// Задание 2
-// Даны два числа a, b и строки S, S0. Вставить b символов строки S в строку S0 начиная с a-го индекса
-void task2(void){
-    // Ввод строк
-    char *S = NULL;
-    char *S0 = NULL;
-    size_t size_S = 0;
-    size_t size_S0 = 0;
-
-    printf("Введите строку S: ");
-    //Передаем указатель на буфер, указатель на переменную которая хранит размер массива из потока ввода
-    getline(&S, &size_S, stdin);
-
-    printf("Введите строку S0: ");
-    getline(&S0, &size_S0, stdin);
-
-    // Удаление символа новой строки строк
-    if (S[string_length(S) - 1] == '\n') {
-        S[string_length(S) - 1] = '\0';
-    }
-    if (S0[string_length(S0) - 1] == '\n') {
-        S0[string_length(S0) - 1] = '\0';
-    }
-
-    char *result = NULL;
-    int a, b;
-    printf("Введите значение a: ");
-    char t;
-    while (1) {
-        if ((scanf("%d%c", &a, &t)==2) && t=='\n'){
-            break;
-        }
-        else{
-            printf("Некорректный ввод. Попробуйте еще раз: ");
-            while (getchar() != '\n');
-        }
-    }
-    printf("Введите значение b: ");
-    char v;
-    while (1) {
-        if ((scanf("%d%c", &b, &v)==2) && v=='\n'){
-            break;
-        }
-        else{
-            printf("Некорректный ввод. Попробуйте еще раз: ");
-            while (getchar() != '\n');
-        }
-    }
-
-
-    insert_chars(S, S0, &result, a, b);
-
-    printf("Исходная строка S: \"%s\"\n", S);
-    printf("Исходная строка S0: \"%s\"\n", S0);
-    printf("Обработанная строка: \"%s\"\n", result);
-
-    free(result);
-    free(S);
-    free(S0);
-}
-
-// Задание 3
-// Отсортировать методом Хоара массив строк по убыванию длины строки
-void task3(void){
-    
-}
-
-int main(void){
-    printf("Выберите задание: ");
-    int task = 0;
     task = choice_task(task);
     
     while (1) {
@@ -111,6 +29,31 @@ int main(void){
         else{
             printf("Неверный номер задания. Попробуйте еще раз: ");
             task = choice_task(task);
+        }
+    }
+    
+}
+
+
+int main(void){
+    int n=2;
+    while (1) {
+        if(n==2){
+            start();
+            printf("\nЗакрыть программу?\n");
+            printf("1-Да\n2-Нет\n");
+            n = choice_task(n);
+        }
+
+        if (n == 1){
+            return 0;
+        }
+        if (n == 2){
+            continue;
+        }
+        else{
+            printf("Данного варианта ответа не существует. Повторите ввод: ");
+            n = choice_task(n);
         }
     }
 }
