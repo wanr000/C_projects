@@ -19,7 +19,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		303EA92F2D3400EE002504A5 /* lab_2 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = lab_2; sourceTree = BUILT_PRODUCTS_DIR; };
+		303EA92F2D3400EE002504A5 /* lab_2 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; name = lab_2; path = "/Users/roman/Projects/C /lab_4/lab_2/build/Debug/lab_2"; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -45,16 +45,7 @@
 			isa = PBXGroup;
 			children = (
 				303EA9312D3400EE002504A5 /* lab_2 */,
-				303EA9302D3400EE002504A5 /* Products */,
 			);
-			sourceTree = "<group>";
-		};
-		303EA9302D3400EE002504A5 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				303EA92F2D3400EE002504A5 /* lab_2 */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -106,7 +97,7 @@
 			mainGroup = 303EA9262D3400EE002504A5;
 			minimizedProjectReferenceProxies = 1;
 			preferredProjectObjectVersion = 77;
-			productRefGroup = 303EA9302D3400EE002504A5 /* Products */;
+			productRefGroup = 303EA9262D3400EE002504A5;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
