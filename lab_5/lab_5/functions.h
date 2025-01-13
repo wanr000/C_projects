@@ -1,86 +1,58 @@
-int isValidInput(const char *input){
-    while (*input){
-        if (!isdigit(*input)){
-            return 0;
-        }
-        input++;
-    }
-    return 1;
-}
-
-int isValidInput_1(const char *input){
-    while (*input){
-        if (!isalpha(*input)){
-            return 0;
-        }
-        input++;
-    }
-    return 1;
-}
-
 int start_1(char b){
     printf("Матрица заполняется случайными числами(a), вводимыми(b) или из файла(c): ");
     while (1) {
-        char input[100];
-//        scanf("%s", &input);
-        // Указываем массив в который считывается строка, максимальное количество символов, поток из которого читаются данные
-        fgets(input, sizeof(input), stdin);
-        // Вместо символа новой строки, ставим символ конца строки
-        input[strcspn(input, "\n")] = '\0';
-        if (isValidInput_1(input) && (strcmp(input, "a") == 0 || strcmp(input, "b") == 0 || strcmp(input, "c") == 0)){
-            sscanf(input, "%s", &b);
+        char t;
+        if (scanf(" %c%c", &b, &t) == 2 && t == '\n' && (b == 'a' || b == 'b' || b == 'c')) {
             break;
         }
-        else{
-            printf("Некорректный ввод. Попробуйте еще раз: ");
+        else {
+            printf("Введен некорректный символ, введите еще раз: ");
+            while (getchar() != '\n');
         }
     }
     return b;
 }
 int start_2(int numm){
-    char input[100];
-    printf("Введите количество элементов массива: ");
+    int n=0;
+    printf("Введите количество строк массива: ");
     while (1) {
-        fgets(input, sizeof(input), stdin);
-        input[strcspn(input, "\n")] = '\0';
-        if (isValidInput(input) && atoi(input) > 0){
-            sscanf(input, "%d", &numm);
+        char t;
+        if (scanf("%d%c", &numm, &t) == 2 && t == '\n' && numm >= 1) {
             break;
         }
-        else{
-            printf("Некорректный ввод. Попробуйте еще раз: ");
+        else {
+            printf("Введен некорректный символ, введите еще раз: ");
+            while (getchar() != '\n');
         }
     }
     return numm;
 }
 int start_22(int numm){
-    char input[100];
+    int n=0;
     printf("Введите количество строк матрицы: ");
     while (1) {
-        fgets(input, sizeof(input), stdin);
-        input[strcspn(input, "\n")] = '\0';
-        if (isValidInput(input) && atoi(input) > 0){
-            sscanf(input, "%d", &numm);
+        char t;
+        if (scanf("%d%c", &numm, &t) == 2 && t == '\n' && numm >= 1) {
             break;
         }
-        else{
-            printf("Некорректный ввод. Попробуйте еще раз: ");
+        else {
+            printf("Введен некорректный символ, введите еще раз: ");
+            while (getchar() != '\n');
         }
     }
     return numm;
 }
 int start_23(int column){
-    char input[100];
-    printf("Введите количество столбцев матрицы: ");
+    int n=0;
+    printf("Введите количество строк матрицы: ");
     while (1) {
-        fgets(input, sizeof(input), stdin);
-        input[strcspn(input, "\n")] = '\0';
-        if (isValidInput(input) && atoi(input) > 0){
-            sscanf(input, "%d", &column);
+        char t;
+        if (scanf("%d%c", &column, &t) == 2 && t == '\n' && column >= 1) {
             break;
         }
-        else{
-            printf("Некорректный ввод. Попробуйте еще раз: ");
+        else {
+            printf("Введен некорректный символ, введите еще раз: ");
+            while (getchar() != '\n');
         }
     }
     return column;
