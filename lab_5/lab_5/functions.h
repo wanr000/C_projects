@@ -14,7 +14,7 @@ int start_1(char b){
 }
 int start_2(int numm){
     int n=0;
-    printf("Введите количество строк массива: ");
+    printf("Введите количество элементов массива: ");
     while (1) {
         char t;
         if (scanf("%d%c", &numm, &t) == 2 && t == '\n' && numm >= 1) {
@@ -92,3 +92,5 @@ int choice_task(int task){
     }
     return task;
 }
+
+

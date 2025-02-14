@@ -29,19 +29,13 @@ int choice_task(int task){
 }
 
 
-void remove_extra_spaces(const char *input, char **output) {
+void remove_spaces(const char *input, char **output) {
     int len = 0;
     int in_word = 0;
     const char *src = input;
     while (*src) {
-        if (!isspace((unsigned char)*src)) {
-            len++;
-            in_word = 1;
-        }
-        else if (in_word) {
-            len++;
-            in_word = 0;
-        }
+        in_word = !isspace((unsigned char)*src) ? len++ : 0;
+        in_word ? (len++, in_word=0) : 0;
         src++;
     }
 
@@ -143,8 +137,7 @@ void quicksort(char **arr, int low, int high, int (*cmp)(const char *, const cha
 
 int compare_length(const char *a, const char *b) {
     int len_a = string_length(a);
-    int len_b = string
-    _length(b);
+    int len_b = string_length(b);
     return len_a - len_b;
 }
 

@@ -10,7 +10,7 @@ void task1(void){
 
     printf("Исходная строка: \"%s\"\n", str);
     
-    remove_extra_spaces(str, &result);
+    remove_spaces(str, &result);
     printf("Обработанная строка: \"%s\"\n", result);
 
     free(result);
