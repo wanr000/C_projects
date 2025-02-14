@@ -54,7 +54,7 @@ void start(void){
     
     
     // Чтение файла
-    int min, max, sum_nx;
+    int min=0, max=0, sum_nx;
     f = fopen(result, "rb");
     for(int k=0;k<n;k++){
         fread(&x, sizeof(x), 1, f);
@@ -69,7 +69,6 @@ void start(void){
     }
     printf("\n");
     fclose(f);
-    free(result);
 
     
     // 2 Найти сумму минимального и максимального элементов
@@ -78,7 +77,28 @@ void start(void){
     
     
     // Занулить элементы по принципу
+    printf("\n");
+    int count;
+    f = fopen(result, "rb");
+    for(int k=0;k<n;k++){
+        fread(&x, sizeof(x), 1, f);
+        if (k==0){
+            count = x;
+            x==0;
+        }
+        if (k==count){
+            count = x + k;
+            x=0;
+        }
+
+        printf("%d ", x);
+    }
+    printf("\n");
+    fclose(f);
+    free(result);
     
+    
+    // Удалить все нули
     
     
 }

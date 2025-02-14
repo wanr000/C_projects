@@ -41,6 +41,5 @@ void insert_chars(const char *S, const char *S0, char **result, int a, int b) {
         (*result)[i + b] = S0[i];
     }
 
-    
     (*result)[new_len] = '\0';
 }
