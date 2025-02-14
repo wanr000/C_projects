@@ -1,14 +1,20 @@
-//
-//  main.c
-//  lab_1_2
-//
-//  Created by Роман on 14.02.25.
-//
-
+// С клавиатуры заполнить файл целыми числами
 #include <stdio.h>
 
-int main(int argc, const char * argv[]) {
-    // insert code here...
-    printf("Hello, World!\n");
+int main(void){
+    int x;
+    scanf("%d", &x);
+    FILE *f = fopen("file.txt", "wb");
+    fwrite(&x, sizeof(x), 1, f);
+    fclose(f);
+    
+    
+    f = fopen("file.txt", "rb");
+    
+    fread(&x, sizeof(x), 1, f);
+    fclose(f);
+    
+    printf("Считано из файла: %d\n", x);
+    
     return 0;
 }
