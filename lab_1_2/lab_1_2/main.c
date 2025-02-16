@@ -33,6 +33,7 @@ void start(void){
     // Количество элементов в файле
     printf("Введите количество целых чисел содержащихся в бинарном файле: ");
     n = correct_choice(n);
+    printf("\n");
     
     
     // Заполнение файла
@@ -54,18 +55,23 @@ void start(void){
     
     
     // Чтение файла
+    printf("\n1| Элементы в файле: ");
     int min=0, max=0, sum_nx;
+    
     f = fopen(result, "rb");
+    fread(&min, sizeof(x), 1, f);
+    // Перемещение курсора в начало файла
+    fseek(f, 0, SEEK_SET);
+    
     for(int k=0;k<n;k++){
         fread(&x, sizeof(x), 1, f);
+        printf("%d ", x);
         if (x > max){
             max = x;
         }
         if (x < min){
             min = x;
         }
-
-        printf("%d ", x);
     }
     printf("\n");
     fclose(f);
@@ -73,36 +79,72 @@ void start(void){
     
     // 2 Найти сумму минимального и максимального элементов
     sum_nx = max + min;
-    printf("Сумма минимального и максимально элемента в бинарном файле: %d", sum_nx);
+    printf("2| Сумма минимального и максимально элемента в бинарном файле: %d", sum_nx);
     
     
     // Занулить элементы по принципу
-    printf("\n");
-    int count;
-    f = fopen(result, "rb");
+    printf("\n3| Файл после зануления элементов: ");
+    int count, not_zeros = 0;
+    f = fopen(result, "rb+");
     for(int k=0;k<n;k++){
+        long int pos = ftell(f); // Сохраняем текущую позицию
         fread(&x, sizeof(x), 1, f);
         if (k==0){
             count = x;
-            x==0;
+            x = 0;
+            fseek(f, pos, SEEK_SET);
+            fwrite(&x, sizeof(x), 1, f);
         }
         if (k==count){
             count = x + k;
             x=0;
+            fseek(f, pos, SEEK_SET);
+            fwrite(&x, sizeof(x), 1, f);
         }
-
+    }
+    
+    fseek(f, 0, SEEK_SET);
+    for(int k=0;k<n;k++){
+        fread(&x, sizeof(x), 1, f);
         printf("%d ", x);
     }
     printf("\n");
     fclose(f);
-    free(result);
     
     
     // Удалить все нули
+    f = fopen(result, "rb+");
+    FILE *temp = fopen("temp.txt", "wb");
+    while (fread(&x, sizeof(x), 1, f)) {
+        if (x != 0) {
+            fwrite(&x, sizeof(x), 1, temp);
+            not_zeros++;
+        }
+    }
+    fclose(f);
+    fclose(temp);
     
+    temp = fopen("temp.txt", "rb");
+    f = fopen(result, "w+b");
+    while (fread(&x, sizeof(x), 1, temp)) {
+        if (x != 0) {
+            fwrite(&x, sizeof(x), 1, f);
+        }
+    }
+    fclose(temp);
     
-}
+    printf("4| Файл после удаления нулей: ");
+    fseek(f, 0, SEEK_SET);
+    for(int k=0;k<not_zeros;k++){
+        fread(&x, sizeof(x), 1, f);
+        printf("%d ", x);
+    }
 
+    
+    printf("\n");
+    fclose(f);
+    free(result);
+}
 
 
 int main(void){
