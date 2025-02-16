@@ -36,7 +36,7 @@ void start(void){
     printf("\n");
     
     
-    // Заполнение файла
+    // 1 Заполнение файла
     FILE *f = fopen(result, "wb");
     for(int k=0;k<n;k++){
         while (1) {
@@ -82,7 +82,7 @@ void start(void){
     printf("2| Сумма минимального и максимально элемента в бинарном файле: %d", sum_nx);
     
     
-    // Занулить элементы по принципу
+    // 3 Занулить элементы по принципу
     printf("\n3| Файл после зануления элементов: ");
     int count, not_zeros = 0;
     f = fopen(result, "rb+");
@@ -112,7 +112,7 @@ void start(void){
     fclose(f);
     
     
-    // Удалить все нули
+    // 4 Удалить все нули
     f = fopen(result, "rb+");
     FILE *temp = fopen("temp.txt", "wb");
     while (fread(&x, sizeof(x), 1, f)) {
@@ -131,6 +131,7 @@ void start(void){
             fwrite(&x, sizeof(x), 1, f);
         }
     }
+    free(result);
     fclose(temp);
     
     printf("4| Файл после удаления нулей: ");
@@ -140,10 +141,8 @@ void start(void){
         printf("%d ", x);
     }
 
-    
     printf("\n");
     fclose(f);
-    free(result);
 }
 
 
@@ -156,7 +155,6 @@ int main(void){
             printf("1-Да👍\n2-Нет☠️\n");
             n = correct_choice(n);
         }
-        
         if (n == 1){
             return 0;
         }
