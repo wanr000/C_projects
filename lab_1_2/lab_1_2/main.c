@@ -9,7 +9,7 @@ void start(void){
     int x, n;
     
     // Имя файла
-    char *name = "/Users/roman/Projects/C /lab_4/lab_1_2/lab_1_2/.bin";
+    char *name = "/Users/roman/Projects/C /lab_4/lab_1_2/lab_1_2/.txt";
     char *filename = NULL;
     size_t size = 0;
     printf("Введите имя бинарного файла: ");
