@@ -15,7 +15,7 @@ void start(const char *filename){
     
     
     // 1 Заполнение файла
-    FILE *f = fopen(filename, "wt");
+    FILE *f = fopen(filename, "wb");
     for(int k=0;k<n;k++){
         while (1) {
             char b;
@@ -36,7 +36,7 @@ void start(const char *filename){
     printf("\n1| Элементы в файле: ");
     int min=0, max=0, sum_nx;
     
-    f = fopen(filename, "rt");
+    f = fopen(filename, "rb");
     fread(&min, sizeof(x), 1, f);
     // Перемещение курсора в начало файла
     fseek(f, 0, SEEK_SET);
@@ -63,7 +63,7 @@ void start(const char *filename){
     // 3 Занулить элементы по принципу
     printf("\n3| Файл после зануления элементов: ");
     int count, not_zeros = 0;
-    f = fopen(filename, "rt+");
+    f = fopen(filename, "rb+");
     for(int k=0;k<n;k++){
         long int pos = ftell(f); // Сохраняем текущую позицию
         fread(&x, sizeof(x), 1, f);
@@ -91,8 +91,8 @@ void start(const char *filename){
     
     
     // 4 Удалить все нули
-    f = fopen(filename, "rt+");
-    FILE *temp = fopen("temp.txt", "wt");
+    f = fopen(filename, "rb+");
+    FILE *temp = fopen("temp.txt", "wb");
     while (fread(&x, sizeof(x), 1, f)) {
         if (x != 0) {
             fwrite(&x, sizeof(x), 1, temp);
@@ -102,8 +102,8 @@ void start(const char *filename){
     fclose(f);
     fclose(temp);
     
-    temp = fopen("temp.txt", "rt");
-    f = fopen(filename, "w+t");
+    temp = fopen("temp.txt", "rb");
+    f = fopen(filename, "w+b");
     while (fread(&x, sizeof(x), 1, temp)) {
         if (x != 0) {
             fwrite(&x, sizeof(x), 1, f);
