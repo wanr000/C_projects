@@ -5,31 +5,8 @@
 #include "functions.h"
 
 
-void start(void){
+void start(const char *filename){
     int x, n;
-    
-    // Имя файла
-    char *name = "/Users/roman/Projects/C /lab_4/lab_1_2/lab_1_2/.txt";
-    char *filename = NULL;
-    size_t size = 0;
-    printf("Введите имя бинарного файла: ");
-    
-    getline(&filename, &size, stdin);
-    
-    // Удаление символа новой строки строк
-        if (name[strlen(name) - 1] == '\n') {
-            name[strlen(name) - 1] = '\0';
-        }
-        if (filename[strlen(filename) - 1] == '\n') {
-            filename[strlen(filename) - 1] = '\0';
-        }
-    
-    char *result = NULL;
-    int a=47, b=255;
-    // Дополнение расположения файла
-    insert_chars(filename, name , &result, a, b);
-    free(filename);
-
     
     // Количество элементов в файле
     printf("Введите количество целых чисел содержащихся в бинарном файле: ");
@@ -38,7 +15,7 @@ void start(void){
     
     
     // 1 Заполнение файла
-    FILE *f = fopen(result, "wb");
+    FILE *f = fopen(filename, "wt");
     for(int k=0;k<n;k++){
         while (1) {
             char b;
@@ -59,7 +36,7 @@ void start(void){
     printf("\n1| Элементы в файле: ");
     int min=0, max=0, sum_nx;
     
-    f = fopen(result, "rb");
+    f = fopen(filename, "rt");
     fread(&min, sizeof(x), 1, f);
     // Перемещение курсора в начало файла
     fseek(f, 0, SEEK_SET);
@@ -86,7 +63,7 @@ void start(void){
     // 3 Занулить элементы по принципу
     printf("\n3| Файл после зануления элементов: ");
     int count, not_zeros = 0;
-    f = fopen(result, "rb+");
+    f = fopen(filename, "rt+");
     for(int k=0;k<n;k++){
         long int pos = ftell(f); // Сохраняем текущую позицию
         fread(&x, sizeof(x), 1, f);
@@ -114,8 +91,8 @@ void start(void){
     
     
     // 4 Удалить все нули
-    f = fopen(result, "rb+");
-    FILE *temp = fopen("temp.txt", "wb");
+    f = fopen(filename, "rt+");
+    FILE *temp = fopen("temp.txt", "wt");
     while (fread(&x, sizeof(x), 1, f)) {
         if (x != 0) {
             fwrite(&x, sizeof(x), 1, temp);
@@ -125,14 +102,13 @@ void start(void){
     fclose(f);
     fclose(temp);
     
-    temp = fopen("temp.txt", "rb");
-    f = fopen(result, "w+b");
+    temp = fopen("temp.txt", "rt");
+    f = fopen(filename, "w+t");
     while (fread(&x, sizeof(x), 1, temp)) {
         if (x != 0) {
             fwrite(&x, sizeof(x), 1, f);
         }
     }
-    free(result);
     fclose(temp);
     
     printf("4| Файл после удаления нулей: ");
@@ -147,11 +123,16 @@ void start(void){
 }
 
 
-int main(void){
+int main(int argc, char *argv[]){
+    if (argc < 2) {
+         printf("Необходимо указать имя файла.\n");
+         return 1;
+     }
+    
     int n=2;
     while (1) {
         if(n==2){
-            start();
+            start(argv[1]);
             printf("\nЗакрыть программу?\n");
             printf("1-Да👍\n2-Нет☠️\n");
             n = correct_choice(n);
