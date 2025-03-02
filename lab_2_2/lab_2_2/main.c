@@ -14,6 +14,9 @@ void start(const char *filename){
     printf("Введите строку: ");
     getline(&str, &size, stdin);
     
+    // Удаляем символ новой строки, добавленный getline
+    str[strcspn(str, "\n")] = '\0';
+    
     // 1 Заполнение файла
     FILE *f = fopen(filename, "wt");
 
