@@ -13,6 +13,49 @@ int correct_choice(int task){
 }
 
 
+void fill_file_from_input(const char *filename) {
+    char *str = NULL;
+    size_t size = 0;
+
+    printf("Введите строку: ");
+    getline(&str, &size, stdin);
+
+    // Удаляем символ новой строки, добавленный getline
+    str[strcspn(str, "\n")] = '\0';
+
+    // Запись строки в файл
+    FILE *f = fopen(filename, "wt");
+    if (f == NULL) {
+        perror("Ошибка открытия файла");
+        free(str);
+        return;
+    }
+    fputs(str, f);
+    fclose(f);
+
+    free(str);
+}
+
+
+void print_file_content(const char *filename) {
+    char *str = NULL;
+    size_t size = 0;
+
+    FILE *f = fopen(filename, "rt");
+    if (f == NULL) {
+        perror("Ошибка открытия файла");
+        return;
+    }
+
+    // Чтение строки из файла
+    getline(&str, &size, f);
+    printf("\n1| Элементы в файле: %s\n", str);
+
+    fclose(f);
+    free(str);
+}
+
+
 // Функция для поиска самой длинной последовательности повторяющихся символов
 void find_longest_sequence(const char *str) {
     int max_length = 1, current_length = 1;
@@ -40,6 +83,27 @@ void find_longest_sequence(const char *str) {
         printf("%c", max_char);
     }
     printf("' (длина: %d)\n", max_length);
+}
+
+
+void find_and_print_longest_sequence(const char *filename) {
+    char *str = NULL;
+    size_t size = 0;
+
+    FILE *f = fopen(filename, "rt");
+    if (f == NULL) {
+        perror("Ошибка открытия файла");
+        return;
+    }
+
+    // Чтение строки из файла
+    getline(&str, &size, f);
+    fclose(f);
+
+    // Поиск и вывод самой длинной последовательности
+    find_longest_sequence(str);
+
+    free(str);
 }
 
 
@@ -81,4 +145,37 @@ void replace_words_of_length(char *str, int length) {
         str[j++] = str[i++];
     }
     str[j] = '\0'; // Завершаем строку
+}
+
+void replace_words_and_save(const char *filename, int word_length) {
+    char *str = NULL;
+    size_t size = 0;
+
+    FILE *f = fopen(filename, "rt");
+    if (f == NULL) {
+        perror("Ошибка открытия файла");
+        return;
+    }
+
+    // Чтение строки из файла
+    getline(&str, &size, f);
+    fclose(f);
+
+    // Замена слов заданной длины пробелами
+    replace_words_of_length(str, word_length);
+
+    // Запись измененной строки обратно в файл
+    f = fopen(filename, "wt");
+    if (f == NULL) {
+        perror("Ошибка открытия файла");
+        free(str);
+        return;
+    }
+    fputs(str, f);
+    fclose(f);
+
+    // Вывод измененного содержимого файла
+    printf(" | Файл после замены всех слов длиной %d пробелами: %s\n", word_length, str);
+
+    free(str);
 }

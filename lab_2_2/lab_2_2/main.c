@@ -1,4 +1,3 @@
-// 1 С клавиатуры заполнить файл символами. Вывести содержимое файла на экран.
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -6,66 +5,26 @@
 
 
 void start(const char *filename){
-    int x, n;
-    
     char *str = NULL;
     size_t size = 0;
 
-    printf("Введите строку: ");
-    getline(&str, &size, stdin);
-    
-    // Удаляем символ новой строки, добавленный getline
-    str[strcspn(str, "\n")] = '\0';
-    
-    // 1 Заполнение файла
-    FILE *f = fopen(filename, "wt");
-
-    fputs(str, f);
-    fclose(f);
-    
-    
+    // 1 С клавиатуры заполнить файл символами. Вывести содержимое файла на экран.
+    // Запись в файл
+    fill_file_from_input(filename);
+        
     // Чтение файла
-    printf("\n1| Элементы в файле: ");
-    f = fopen(filename, "rt");
-    fgets(str, &size, f);
-    printf("%s", str);
-    fclose(f);
-
+    print_file_content(filename);
     
+
     // 2 Найти наиболее длинную последовательность повторяющихся символов.
-    find_longest_sequence(str);
+    find_and_print_longest_sequence(filename);
     
     
     // 3 Заменить все слова заданной длины пробелами.
     printf("\n3| Введите длину слов, которые нужно заменить пробелами: ");
     int word_length;
     scanf("%d", &word_length);
-    replace_words_of_length(str, word_length);
-    
-    // Запись измененной строки обратно в файл
-    f = fopen(filename, "wt");
-    if (f == NULL) {
-        perror("Ошибка открытия файла");
-        free(str);
-        return;
-    }
-    fputs(str, f);
-    fclose(f);
-    
-    // Вывод измененного содержимого файла
-    printf("3| Файл после замены всех слов длиной %d пробелами: ", word_length);
-    f = fopen(filename, "rt");
-    if (f == NULL) {
-        perror("Ошибка открытия файла");
-        free(str);
-        return;
-    }
-    fgets(str, size, f);
-    printf("%s\n", str);
-    fclose(f);
-    
-    free(str);
-    
+    replace_words_and_save(filename, word_length);
 }
 
 
