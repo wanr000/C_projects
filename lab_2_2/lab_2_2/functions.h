@@ -45,12 +45,40 @@ void find_longest_sequence(const char *str) {
 
 // Функция для замены слов заданной длины пробелами
 void replace_words_of_length(char *str, int length) {
-    char *word = strtok(str, " ");
-    while (word != NULL) {
-        if (strlen(word) == length) {
-            memset(word, ' ', length);
+    int i = 0, j = 0;
+    while (str[i] != '\0') {
+        // Пропускаем пробелы
+        if (str[i] == ' ') {
+            i++;
+            continue;
         }
-        word = strtok(NULL, " ");
+        
+        // Находим начало слова
+        int start = i;
+        while (str[i] != ' ' && str[i] != '\0') {
+            i++;
+        }
+        int end = i;
+        
+        // Проверяем длину слова
+        if (end - start == length) {
+            // Заменяем слово пробелами
+            for (int k = start; k < end; k++) {
+                str[k] = ' ';
+            }
+        }
     }
+    
+    // Удаляем лишние пробелы
+    i = 0, j = 0;
+    while (str[i] != '\0') {
+        // Пропускаем лишние пробелы
+        if (str[i] == ' ' && (i == 0 || str[i - 1] == ' ')) {
+            i++;
+            continue;
+        }
+        // Копируем символ
+        str[j++] = str[i++];
+    }
+    str[j] = '\0'; // Завершаем строку
 }
-
