@@ -8,80 +8,60 @@
 void start(const char *filename){
     int x, n;
     
+    char *str = NULL;
+    size_t size = 0;
+
+    printf("Введите строку: ");
+    getline(&str, &size, stdin);
+    
     // 1 Заполнение файла
     FILE *f = fopen(filename, "wt");
-    for(int k=0;k<n;k++){
-        while (1) {
-            char b;
-            if(scanf("%d%c",&x, &b) == 2 && b=='\n'){
-                break;
-            }
-            else {
-                printf("Некорректный ввод. Повторите еще раз: ");
-                while (getchar() != '\n');
-            }
-        }
-        fwrite(&x, sizeof(x), 1, f);
-    }
+
+    fputs(str, f);
     fclose(f);
     
     
     // Чтение файла
     printf("\n1| Элементы в файле: ");
-    int min=0, max=0, sum_nx;
-    
     f = fopen(filename, "rt");
-    fread(&min, sizeof(x), 1, f);
-    // Перемещение курсора в начало файла
-    fseek(f, 0, SEEK_SET);
-    
-    for(int k=0;k<n;k++){
-        fread(&x, sizeof(x), 1, f);
-        printf("%d ", x);
-        if (x > max){
-            max = x;
-        }
-        if (x < min){
-            min = x;
-        }
-    }
-    printf("\n");
+    fgets(str, &size, f);
+    printf("%s", str);
     fclose(f);
 
     
     // 2 Найти наиболее длинную последовательность повторяющихся символов.
-    sum_nx = max + min;
-    printf("2| наиболее длинная последовательность повторяющихся символов в текстовом файле: %d", sum_nx);
+    find_longest_sequence(str);
     
     
     // 3 Заменить все слова заданной длины пробелами.
-    printf("\n3| Файл после замены всех слов заданной длины пробелами: ");
-    int count, not_zeros = 0;
-    f = fopen(filename, "rt+");
-    for(int k=0;k<n;k++){
-        long int pos = ftell(f); // Сохраняем текущую позицию
-        fread(&x, sizeof(x), 1, f);
-        if (k==0){
-            count = x;
-            x = 0;
-            fseek(f, pos, SEEK_SET);
-            fwrite(&x, sizeof(x), 1, f);
-        }
-        if (k==count){
-            count = x + k;
-            x=0;
-            fseek(f, pos, SEEK_SET);
-            fwrite(&x, sizeof(x), 1, f);
-        }
-    }
+    printf("\n3| Введите длину слов, которые нужно заменить пробелами: ");
+    int word_length;
+    scanf("%d", &word_length);
+    replace_words_of_length(str, word_length);
     
-    fseek(f, 0, SEEK_SET);
-    for(int k=0;k<n;k++){
-        fread(&x, sizeof(x), 1, f);
-        printf("%d ", x);
+    // Запись измененной строки обратно в файл
+    f = fopen(filename, "wt");
+    if (f == NULL) {
+        perror("Ошибка открытия файла");
+        free(str);
+        return;
     }
-    printf("\n");
+    fputs(str, f);
     fclose(f);
+    
+    // Вывод измененного содержимого файла
+    printf("3| Файл после замены всех слов длиной %d пробелами: ", word_length);
+    f = fopen(filename, "rt");
+    if (f == NULL) {
+        perror("Ошибка открытия файла");
+        free(str);
+        return;
+    }
+    fgets(str, size, f);
+    printf("%s\n", str);
+    fclose(f);
+    
+    free(str);
     
 }
 
