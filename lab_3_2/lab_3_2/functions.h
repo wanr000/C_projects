@@ -42,7 +42,7 @@ int correct_choice(int task) {
 void determine_sign() {
     int number;
     printf("Введите число: ");
-    scanf("%d", &number);
+    number = correct_choice(number);
 
     if ((number >> (sizeof(int) * 8 - 1)) & 1) {
         printf("Число отрицательное.\n");
@@ -54,8 +54,7 @@ void determine_sign() {
 // Функция для ввода данных о фильме
 void input_movie(Movie *movie) {
     printf("Введите длительность фильма (в минутах): ");
-    scanf("%d", &movie->duration);
-    getchar(); // Очистка буфера после scanf
+    movie->duration = correct_choice(movie->duration);
 
     printf("Введите название фильма: ");
     char buffer[100];
@@ -73,8 +72,7 @@ void input_movie(Movie *movie) {
     movie->genre.genre[strcspn(movie->genre.genre, "\n")] = '\0'; // Удаление символа новой строки
 
     printf("Введите год выпуска фильма: ");
-    scanf("%d", &movie->year);
-    getchar(); // Очистка буфера после scanf
+    movie->year = correct_choice(movie->year);
 }
 
 // Функция для вывода данных о фильме
@@ -126,7 +124,7 @@ void task1() {
 void task2() {
     int count;
     printf("Введите количество фильмов: ");
-    scanf("%d", &count);
+    count = correct_choice(count);
     getchar(); // Очистка буфера после scanf
 
     Movie *movies = (Movie *)malloc(count * sizeof(Movie));
@@ -150,8 +148,7 @@ void task2() {
         printf("3. Удалить фильмы с длительностью больше заданной\n");
         printf("4. Выйти\n");
         printf("Выберите действие: ");
-        scanf("%d", &action);
-        getchar(); // Очистка буфера после scanf
+        action = correct_choice(action);
 
         switch (action) {
             case 1: {
@@ -172,8 +169,7 @@ void task2() {
             case 3: {
                 int max_duration;
                 printf("Введите максимальную длительность для удаления: ");
-                scanf("%d", &max_duration);
-                getchar(); // Очистка буфера после scanf
+                max_duration = correct_choice(max_duration);
                 delete_movies_by_duration(movies, &count, max_duration);
                 break;
             }
