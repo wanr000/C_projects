@@ -125,7 +125,6 @@ void task2() {
     int count;
     printf("Введите количество фильмов: ");
     count = correct_choice(count);
-    getchar(); // Очистка буфера после scanf
 
     Movie *movies = (Movie *)malloc(count * sizeof(Movie));
     if (movies == NULL) {
