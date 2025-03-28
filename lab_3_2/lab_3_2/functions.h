@@ -54,7 +54,7 @@ void determine_sign() {
 // Функция для ввода данных о фильме
 void input_movie(Movie *movie) {
     printf("Введите длительность фильма (в минутах): ");
-    movie->duration = correct_choice(movie->duration);
+    (*movie).duration = correct_choice((*movie).duration);
 
     printf("Введите название фильма: ");
     char buffer[100];
@@ -140,7 +140,7 @@ void task2() {
 
     // Меню для работы с фильмами
     int action;
-    do {
+    while (action != 4){
         printf("\nМеню:\n");
         printf("1. Вывести все фильмы\n");
         printf("2. Найти фильмы по названию\n");
@@ -181,7 +181,7 @@ void task2() {
                 break;
             }
         }
-    } while (action != 4);
+     };
 
     // Освобождение памяти
     for (int i = 0; i < count; i++) {

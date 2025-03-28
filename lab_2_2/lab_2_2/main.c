@@ -23,7 +23,7 @@ void start(const char *filename){
     // 3 Заменить все слова заданной длины пробелами.
     printf("\n3| Введите длину слов, которые нужно заменить пробелами: ");
     int word_length;
-    scanf("%d", &word_length);
+    word_length = correct_choice(word_length);
     replace_words_and_save(filename, word_length);
 }
 
