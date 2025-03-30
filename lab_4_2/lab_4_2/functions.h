@@ -21,6 +21,8 @@ typedef struct {
 } CharStack;
 
 // Общие функции для стеков
+int correct_choice(int task);
+
 void initIntStack(IntStack *s, int capacity) {
     s->data = (int*)malloc(capacity * sizeof(int));
     if (!s->data) exit(1);
@@ -129,12 +131,12 @@ int findSumAfterMax(IntStack *s) {
 void fillStack(IntStack *s, bool isDescending) {
     printf("Введите элементы стека (%s):\n", isDescending ? "убывающий" : "возрастающий");
     int prev;
-    scanf("%d", &prev);
+    prev = correct_choice(prev);
     pushInt(s, prev);
 
     for (int i = 1; i < s->capacity; i++) {
         int num;
-        scanf("%d", &num);
+        num = correct_choice(num);
         if ((isDescending && num >= prev) || (!isDescending && num <= prev)) {
             printf("Некорректный порядок! Повторите ввод.\n");
             i--;

@@ -22,7 +22,7 @@ void task1() {
     printf("\n=== Задание 1 ===\n");
     int capacity;
     printf("Введите размер стека: ");
-    scanf("%d", &capacity);
+    capacity = correct_choice(capacity);
 
     IntStack s;
     initIntStack(&s, capacity);
@@ -30,7 +30,7 @@ void task1() {
     printf("Введите элементы стека (целые числа):\n");
     for (int i = 0; i < capacity; i++) {
         int num;
-        scanf("%d", &num);
+        num = correct_choice(num);
         pushInt(&s, num);
     }
 
@@ -45,7 +45,7 @@ void task2() {
     printf("\n=== Задание 2 ===\n");
     int capacity;
     printf("Введите размер стеков: ");
-    scanf("%d", &capacity);
+    capacity = correct_choice(capacity);
 
     IntStack s1, s2;
     initIntStack(&s1, capacity);
@@ -106,7 +106,7 @@ int main() {
         printf("3. Задание 3 (Вычисление выражений из файла)\n");
         printf("4. Выход\n");
         printf("Выберите задание: ");
-        scanf("%d", &choice);
+        choice = correct_choice(choice);
 
         switch (choice) {
             case 1: task1(); break;
