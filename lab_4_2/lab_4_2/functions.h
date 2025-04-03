@@ -20,6 +20,8 @@ typedef struct {
     int capacity;
 } CharStack;
 
+
+
 // Общие функции для стеков
 int correct_choice(int task);
 
@@ -98,7 +100,95 @@ double popDouble(DoubleStack *s) {
 
 void freeIntStack(IntStack *s) {
     free(s->data);
+    s->top = -1;
+    s->capacity = 0;
 }
+
+
+size_t strlen(const char *s) {
+    size_t len = 0;
+    // Проверяем на NULL на всякий случай, хотя стандартный strlen этого не делает
+    if (s == NULL) {
+        return 0;
+    }
+    while (s[len] != '\0') {
+        len++;
+    }
+    return len;
+}
+
+int my_isspace(int c) {
+    return (c == ' ' || c == '\f' || c == '\n' || c == '\r' || c == '\t' || c == '\v');
+}
+
+int my_isdigit(int c) {
+    return (c >= '0' && c <= '9');
+}
+
+size_t my_strcspn(const char *s1, const char *s2) {
+    size_t len = 0;
+    const char *p1, *p2;
+
+    if (s1 == NULL || s2 == NULL) {
+        return 0; // Обработка NULL-указателей
+    }
+
+    for (p1 = s1; *p1 != '\0'; ++p1) {
+        // Проверяем, есть ли символ *p1 в строке s2
+        for (p2 = s2; *p2 != '\0'; ++p2) {
+            if (*p1 == *p2) {
+                // Найден символ из s2 в s1, возвращаем текущую длину сегмента
+                return len;
+            }
+        }
+        // Символ *p1 не найден в s2, увеличиваем длину сегмента
+        len++;
+    }
+
+    // Дошли до конца s1, не найдя ни одного символа из s2
+    return len;
+}
+
+int strcmp(const char *s1, const char *s2) {
+     if (s1 == NULL && s2 == NULL) return 0;
+     if (s1 == NULL) return -1; // NULL считается меньше любой строки
+     if (s2 == NULL) return 1;  // Любая строка считается больше NULL
+
+    // Идем по строкам, пока символы совпадают и не достигнут конец одной из строк
+    while (*s1 != '\0' && *s1 == *s2) {
+        s1++;
+        s2++;
+    }
+    // Возвращаем разницу кодов первых несовпадающих символов (или 0, если строки равны).
+    // Важно использовать unsigned char для корректного сравнения кодов > 127.
+    return *(const unsigned char*)s1 - *(const unsigned char*)s2;
+}
+
+
+size_t strcspn(const char *s1, const char *s2) {
+    size_t len = 0;
+    const char *p1, *p2;
+
+    if (s1 == NULL || s2 == NULL) {
+        return 0; // Обработка NULL-указателей
+    }
+
+    for (p1 = s1; *p1 != '\0'; ++p1) {
+        // Проверяем, есть ли символ *p1 в строке s2
+        for (p2 = s2; *p2 != '\0'; ++p2) {
+            if (*p1 == *p2) {
+                // Найден символ из s2 в s1, возвращаем текущую длину сегмента
+                return len;
+            }
+        }
+        // Символ *p1 не найден в s2, увеличиваем длину сегмента
+        len++;
+    }
+
+    // Дошли до конца s1, не найдя ни одного символа из s2
+    return len;
+}
+
 
 // Задание 1
 int findSumAfterMax(IntStack *s) {
@@ -128,41 +218,59 @@ int findSumAfterMax(IntStack *s) {
 }
 
 // Задание 2
-void fillStack(IntStack *s, bool isDescending) {
-    printf("Введите элементы стека (%s):\n", isDescending ? "убывающий" : "возрастающий");
-    int prev;
-    prev = correct_choice(prev);
-    pushInt(s, prev);
-
-    for (int i = 1; i < s->capacity; i++) {
-        int num;
-        num = correct_choice(num);
-        if ((isDescending && num >= prev) || (!isDescending && num <= prev)) {
-            printf("Некорректный порядок! Повторите ввод.\n");
-            i--;
-            continue;
+void fillStack(IntStack *s, int capacity, const char *order) {
+    int value;
+    for (int i = 0; i < capacity; i++) {
+        printf("Введите элемент %d: ", i + 1);
+        value = correct_choice(value);
+        
+        if (strcmp(order, "desc") == 0) {
+            // Проверка убывающего порядка
+            if (i > 0 && value >= peekInt(s)) {
+                printf("Ошибка: элементы должны быть в строго убывающем порядке!\n");
+                i--;
+                continue;
+            }
+        } else if (strcmp(order, "asc") == 0) {
+            // Проверка возрастающего порядка
+            if (i > 0 && value <= peekInt(s)) {
+                printf("Ошибка: элементы должны быть в строго возрастающем порядке!\n");
+                i--;
+                continue;
+            }
         }
-        pushInt(s, num);
-        prev = num;
+        pushInt(s, value);
     }
 }
 
-IntStack mergeStacks(IntStack *s1, IntStack *s2) {
-    IntStack result;
-    initIntStack(&result, s1->capacity + s2->capacity);
+void mergeStacks(IntStack *s1, IntStack *s2, IntStack *result) {
+    IntStack auxStack;
+    initIntStack(&auxStack, s2->capacity);
 
-    while (!isIntStackEmpty(s1) && !isIntStackEmpty(s2)) {
-        if (peekInt(s1) >= peekInt(s2)) {
-            pushInt(&result, popInt(s1));
+  
+    while (!isIntStackEmpty(s2)) {
+        pushInt(&auxStack, popInt(s2));
+    }
+
+    while (!isIntStackEmpty(s1) && !isIntStackEmpty(&auxStack)) {
+        int peek1 = peekInt(s1);
+        int peekAux = peekInt(&auxStack);
+
+        if (peek1 <= peekAux) {
+            pushInt(result, popInt(s1)); // Берем меньший из s1
         } else {
-            pushInt(&result, popInt(s2));
+            pushInt(result, popInt(&auxStack)); // Берем меньший из auxStack
         }
     }
 
-    while (!isIntStackEmpty(s1)) pushInt(&result, popInt(s1));
-    while (!isIntStackEmpty(s2)) pushInt(&result, popInt(s2));
+    while (!isIntStackEmpty(s1)) {
+        pushInt(result, popInt(s1));
+    }
+    while (!isIntStackEmpty(&auxStack)) {
+        pushInt(result, popInt(&auxStack));
+    }
 
-    return result;
+    freeIntStack(&auxStack);
 }
 
 // Задание 3

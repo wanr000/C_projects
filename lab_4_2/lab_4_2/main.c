@@ -9,9 +9,9 @@
 */
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 #include <ctype.h>
 #include <stdbool.h>
+#include <limits.h>
 #include "functions.h"
 
 #define MAX_SIZE 100
@@ -19,7 +19,7 @@
 
 
 void task1() {
-    printf("\n=== Задание 1 ===\n");
+    printf("\nЗадание 1\n");
     int capacity;
     printf("Введите размер стека: ");
     capacity = correct_choice(capacity);
@@ -42,34 +42,38 @@ void task1() {
 
 
 void task2() {
-    printf("\n=== Задание 2 ===\n");
+    printf("\nЗадание 2\n");
     int capacity;
     printf("Введите размер стеков: ");
-    capacity = correct_choice(capacity);
+    scanf("%d", &capacity);
 
-    IntStack s1, s2;
+    IntStack s1, s2, s3;
     initIntStack(&s1, capacity);
     initIntStack(&s2, capacity);
+    initIntStack(&s3, capacity * 2);
 
-    fillStack(&s1, true);  // Убывающий
-    fillStack(&s2, false); // Возрастающий
+    printf("\nЗаполните первый стек (СТРОГО УБЫВАЮЩИЙ ПОРЯДОК):\n");
+    fillStack(&s1, capacity, "desc");
 
-    IntStack merged = mergeStacks(&s1, &s2);
+    printf("\nЗаполните второй стек (СТРОГО ВОЗРАСТАЮЩИЙ ПОРЯДОК):\n");
+    fillStack(&s2, capacity, "asc");
 
-    printf("Объединенный стек (убывающий):\n");
-    while (!isIntStackEmpty(&merged)) {
-        printf("%d ", popInt(&merged));
+    mergeStacks(&s1, &s2, &s3);
+
+    printf("\nРезультат (по убыванию): \n");
+    while (!isIntStackEmpty(&s3)) {
+        printf("%d ", popInt(&s3));
     }
     printf("\n");
 
     freeIntStack(&s1);
     freeIntStack(&s2);
-    freeIntStack(&merged);
+    freeIntStack(&s3);
 }
 
 
 void task3() {
-    printf("\n=== Задание 3 ===\n");
+    printf("\nЗадание 3\n");
     FILE *input = fopen("input.txt", "r");
     FILE *output = fopen("output.txt", "w");
 
@@ -101,10 +105,10 @@ int main() {
     int choice;
     do {
         printf("\n=================== Меню ===================\n");
-        printf("1. Задание 1 (Сумма после максимума в стеке)\n");
-        printf("2. Задание 2 (Объединение двух стеков)\n");
-        printf("3. Задание 3 (Вычисление выражений из файла)\n");
-        printf("4. Выход\n");
+        printf("1| Задание 1 (Сумма после максимума в стеке)\n");
+        printf("2| Задание 2 (Объединение двух стеков)\n");
+        printf("3| Задание 3 (Вычисление выражений из файла)\n");
+        printf("4| Выход\n");
         printf("Выберите задание: ");
         choice = correct_choice(choice);
 
