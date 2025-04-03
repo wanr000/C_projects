@@ -117,15 +117,15 @@ size_t strlen(const char *s) {
     return len;
 }
 
-int my_isspace(int c) {
+int isspace(int c) {
     return (c == ' ' || c == '\f' || c == '\n' || c == '\r' || c == '\t' || c == '\v');
 }
 
-int my_isdigit(int c) {
+int isdigit(int c) {
     return (c >= '0' && c <= '9');
 }
 
-size_t my_strcspn(const char *s1, const char *s2) {
+size_t strcspn(const char *s1, const char *s2) {
     size_t len = 0;
     const char *p1, *p2;
 
@@ -162,31 +162,6 @@ int strcmp(const char *s1, const char *s2) {
     // Возвращаем разницу кодов первых несовпадающих символов (или 0, если строки равны).
     // Важно использовать unsigned char для корректного сравнения кодов > 127.
     return *(const unsigned char*)s1 - *(const unsigned char*)s2;
-}
-
-
-size_t strcspn(const char *s1, const char *s2) {
-    size_t len = 0;
-    const char *p1, *p2;
-
-    if (s1 == NULL || s2 == NULL) {
-        return 0; // Обработка NULL-указателей
-    }
-
-    for (p1 = s1; *p1 != '\0'; ++p1) {
-        // Проверяем, есть ли символ *p1 в строке s2
-        for (p2 = s2; *p2 != '\0'; ++p2) {
-            if (*p1 == *p2) {
-                // Найден символ из s2 в s1, возвращаем текущую длину сегмента
-                return len;
-            }
-        }
-        // Символ *p1 не найден в s2, увеличиваем длину сегмента
-        len++;
-    }
-
-    // Дошли до конца s1, не найдя ни одного символа из s2
-    return len;
 }
 
 
