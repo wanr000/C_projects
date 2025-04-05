@@ -166,86 +166,104 @@ int strcmp(const char *s1, const char *s2) {
 
 
 // Задание 1
-int findSumAfterMax(IntStack *s) {
+int findMostFrequentElement(IntStack *s) {
     if (isIntStackEmpty(s)) {
-        printf("Стек пуст!\n");
-        return 0;
+        return INT_MIN;
     }
 
-    int max_val = s->data[0];
-    int max_pos = 0;
-
-    for (int i = 1; i <= s->top; i++) {
-        if (s->data[i] > max_val) {
-            max_val = s->data[i];
-            max_pos = i;
+    int max_count = 1;
+    int most_frequent = s->data[0];
+    
+    // Проходим по всем элементам стека
+    for (int i = 0; i <= s->top; i++) {
+        int count = 1;
+        // Считаем количество вхождений текущего элемента
+        for (int j = i + 1; j <= s->top; j++) {
+            if (s->data[i] == s->data[j]) {
+                count++;
+            }
+        }
+        // Если нашли более частый элемент, или такой же частый, но больше по значению
+        if (count > max_count || (count == max_count && s->data[i] > most_frequent)) {
+            max_count = count;
+            most_frequent = s->data[i];
         }
     }
 
-    if (max_pos == s->top) return 0;
-
-    int sum = 0;
-    for (int i = max_pos + 1; i <= s->top; i++) {
-        sum += s->data[i];
-    }
-
-    return sum;
+    return most_frequent;
 }
 
 // Задание 2
-void fillStack(IntStack *s, int capacity, const char *order) {
-    int value;
-    for (int i = 0; i < capacity; i++) {
-        printf("Введите элемент %d: ", i + 1);
-        value = correct_choice(value);
-        
-        if (strcmp(order, "desc") == 0) {
-            // Проверка убывающего порядка
-            if (i > 0 && value >= peekInt(s)) {
-                printf("Ошибка: элементы должны быть в строго убывающем порядке!\n");
-                i--;
-                continue;
-            }
-        } else if (strcmp(order, "asc") == 0) {
-            // Проверка возрастающего порядка
-            if (i > 0 && value <= peekInt(s)) {
-                printf("Ошибка: элементы должны быть в строго возрастающем порядке!\n");
-                i--;
-                continue;
-            }
-        }
-        pushInt(s, value);
+void CopyStack(IntStack *dest, const IntStack *src) { // src теперь const
+    IntStack temp1, temp2;
+    // Проверяем src->capacity, чтобы избежать выделения 0 или отрицательной памяти
+    if (src->capacity <= 0) {
+         // Обработка ошибки или инициализация dest пустым
+         initIntStack(dest, 0); // Например, инициализируем пустым
+         fprintf(stderr, "Предупреждение: Попытка копировать стек с невалидной вместимостью.\n");
+         return;
+     }
+
+    initIntStack(&temp1, src->capacity);
+    initIntStack(&temp2, src->capacity);
+
+    // 1. Скопировать данные из массива src->data в temp1
+    // Порядок в temp1 будет как в массиве: [дно ... вершина]
+    for (int i = 0; i <= src->top; i++) {
+        pushInt(&temp1, src->data[i]);
     }
+
+    // 2. Переложить из temp1 в temp2 (переворачивает порядок)
+    // Порядок в temp2 будет: [вершина ... дно]
+    while (!isIntStackEmpty(&temp1)) {
+        pushInt(&temp2, popInt(&temp1));
+    }
+
+    // 3. Переложить из temp2 в dest (снова переворачивает)
+    // Порядок в dest будет: [дно ... вершина] - точная копия src
+    while (!isIntStackEmpty(&temp2)) {
+        pushInt(dest, popInt(&temp2));
+    }
+
+    freeIntStack(&temp1);
+    freeIntStack(&temp2);
 }
 
-void mergeStacks(IntStack *s1, IntStack *s2, IntStack *result) {
-    IntStack auxStack;
-    initIntStack(&auxStack, s2->capacity);
+void mergeAscendingStacks(IntStack *s1, IntStack *s2, IntStack *result) {
+    IntStack temp1, temp2;
+    initIntStack(&temp1, s1->capacity); // Используем оригинальные capacity
+    initIntStack(&temp2, s2->capacity);
 
-  
-    while (!isIntStackEmpty(s2)) {
-        pushInt(&auxStack, popInt(s2));
-    }
+    // Создаем копии исходных стеков
+    // Если s1 = [1, 3, 5] (5 - вершина), то temp1 = [1, 3, 5] (5 - вершина)
+    // Если s2 = [2, 4, 6] (6 - вершина), то temp2 = [2, 4, 6] (6 - вершина)
+    CopyStack(&temp1, s1);
+    CopyStack(&temp2, s2);
 
-    while (!isIntStackEmpty(s1) && !isIntStackEmpty(&auxStack)) {
-        int peek1 = peekInt(s1);
-        int peekAux = peekInt(&auxStack);
-
-        if (peek1 <= peekAux) {
-            pushInt(result, popInt(s1)); // Берем меньший из s1
+    // Сливаем стеки, сравнивая вершины (самые большие доступные элементы)
+    // Помещаем БОЛЬШИЙ из них в result.
+    // Это строит result в порядке [6, 5, 4, 3, 2, 1] (1 - вершина)
+    while (!isIntStackEmpty(&temp1) && !isIntStackEmpty(&temp2)) {
+        if (peekInt(&temp1) > peekInt(&temp2)) {
+            pushInt(result, popInt(&temp1)); // Кладем больший в result
         } else {
-            pushInt(result, popInt(&auxStack)); // Берем меньший из auxStack
+            pushInt(result, popInt(&temp2)); // Кладем больший (или равный) в result
         }
     }
 
-    while (!isIntStackEmpty(s1)) {
-        pushInt(result, popInt(s1));
+    // Добавляем оставшиеся элементы из одного из стеков
+    while (!isIntStackEmpty(&temp1)) {
+        pushInt(result, popInt(&temp1));
     }
-    while (!isIntStackEmpty(&auxStack)) {
-        pushInt(result, popInt(&auxStack));
+    while (!isIntStackEmpty(&temp2)) {
+        pushInt(result, popInt(&temp2));
     }
 
-    freeIntStack(&auxStack);
+    // Теперь result содержит элементы в порядке [max, ..., min], min на вершине.
+    // При печати через popInt порядок будет возрастающим.
+
+    freeIntStack(&temp1);
+    freeIntStack(&temp2);
 }
 
 // Задание 3

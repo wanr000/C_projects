@@ -1,7 +1,7 @@
 /*
 Задание:
- 1. Создать стек для целых чисел. Максимальный размер стека вводится с экрана. Найти сумму после максимального элемента стека.
- 2. Создать два стека для целых чисел. Первый стек – организовать ввод по убыванию, второй cтек – организовать ввод по возрастанию. Без сортировок и переворачивания исходных стеков сформировать третий стек упорядоченный по убыванию
+ 1. Создать стек для целых чисел. Максимальный размер стека вводится с экрана. Найти самый часто повторяющийся элемент стека.
+ 2. Создать два стека для целых чисел. Первый стек – организовать ввод по возрастанию, второй стек – организовать ввод по возрастанию. Без сортировок и переворачивания исходных стеков сформировать третий стек упорядоченный по возрастанию.
  3. В текстовом файле записаны строки – арифметические выражения. Числа – вещественные, знаки действий - -, +, *, / и скобки (). Используя работу со стеками найти значение каждого выражения и записать в файл результатов. Если в исходном файле в строке есть ошибка – найти ее предполагаемую позицию (позицию первой ошибки) и в выходной файл записать сообщение «Ошибка в позиции N»
  
 Студент: Свирид Роман Сергеевич
@@ -18,56 +18,101 @@
 
 
 void task1() {
-    printf("\nЗадание 1\n");
+    printf("\nЗадание 1:\n");
+    
+    // Ввод размера стека
     int capacity;
     printf("Введите размер стека: ");
     capacity = correct_choice(capacity);
 
-    IntStack s;
-    initIntStack(&s, capacity);
+    // Инициализация стека
+    IntStack stack;
+    initIntStack(&stack, capacity);
 
+    // Заполнение стека
     printf("Введите элементы стека (целые числа):\n");
     for (int i = 0; i < capacity; i++) {
         int num;
+        printf("Элемент %d: ", i+1);
         num = correct_choice(num);
-        pushInt(&s, num);
+        pushInt(&stack, num);
     }
 
-    int sum = findSumAfterMax(&s);
-    printf("Сумма элементов после максимального: %d\n", sum);
+    // Поиск самого частого элемента
+    int most_frequent = findMostFrequentElement(&stack);
+    
+    // Вывод результата
+    if (most_frequent != INT_MIN) {
+        printf("Самый часто повторяющийся элемент: %d\n", most_frequent);
+    } else {
+        printf("Стек пуст!\n");
+    }
 
-    freeIntStack(&s);
+    // Освобождение памяти
+    freeIntStack(&stack);
 }
 
 
 void task2() {
-    printf("\nЗадание 2\n");
+    printf("\nЗадание 2:\n");
+
     int capacity;
     printf("Введите размер стеков: ");
-    scanf("%d", &capacity);
+    capacity = correct_choice(0);
 
-    IntStack s1, s2, s3;
-    initIntStack(&s1, capacity);
-    initIntStack(&s2, capacity);
-    initIntStack(&s3, capacity * 2);
+    if (capacity <= 0) {
+        printf("Ошибка: размер стека должен быть положительным.\n");
+        return;
+    }
 
-    printf("\nЗаполните первый стек (СТРОГО УБЫВАЮЩИЙ ПОРЯДОК):\n");
-    fillStack(&s1, capacity, "desc");
+    IntStack stack1, stack2, result;
+    initIntStack(&stack1, capacity);
+    initIntStack(&stack2, capacity);
+    initIntStack(&result, capacity * 2); // result может быть вдвое больше
 
-    printf("\nЗаполните второй стек (СТРОГО ВОЗРАСТАЮЩИЙ ПОРЯДОК):\n");
-    fillStack(&s2, capacity, "asc");
+    
+    printf("Заполните первый стек из %d элементов, строго по возрастанию:\n\n", capacity);
+    int prev = INT_MIN;
+    for (int i = 0; i < capacity; ) {
+        printf("Элемент %d: ", i+1);
+        int num = correct_choice(0);
+        if (i > 0 && num <= prev) {
+            printf("Ошибка: элементы должны быть в строго возрастающем порядке (предыдущий был %d)!\n", prev);
+            continue;
+        }
+        pushInt(&stack1, num);
+        prev = num;
+        i++;
+    }
 
-    mergeStacks(&s1, &s2, &s3);
+    printf("\nЗаполните второй стек (%d элементов, строго по возрастанию):\n", capacity);
+    prev = INT_MIN;
+    for (int i = 0; i < capacity; ) {
+         int num = correct_choice(0);
+         if (i > 0 && num <= prev) {
+             printf("Ошибка: элементы должны быть в строго возрастающем порядке (предыдущий был %d)!\n", prev);
+             continue;
+         }
+         pushInt(&stack2, num);
+         prev = num;
+         i++;
+    }
 
-    printf("\nРезультат (по убыванию): \n");
-    while (!isIntStackEmpty(&s3)) {
-        printf("%d ", popInt(&s3));
+    // Объединение стеков с использованием trueCopyStack и новой логики
+    // Исходные stack1 и stack2 НЕ изменяются.
+    // result будет сформирован так, что наименьший элемент окажется на вершине.
+    mergeAscendingStacks(&stack1, &stack2, &result);
+
+    printf("\nРезультат объединения (по возрастанию):\n");
+    while (!isIntStackEmpty(&result)) {
+        // popInt будет извлекать min, затем следующий и т.д.
+        printf("%d ", popInt(&result));
     }
     printf("\n");
 
-    freeIntStack(&s1);
-    freeIntStack(&s2);
-    freeIntStack(&s3);
+    freeIntStack(&stack1);
+    freeIntStack(&stack2);
+    freeIntStack(&result);
 }
 
 
@@ -104,11 +149,11 @@ int main() {
     int choice;
     do {
         printf("\n=================== Меню ===================\n");
-        printf("1| Задание 1 (Сумма после максимума в стеке)\n");
+        printf("1| Задание 1 (Самый часто повторяющийся элемент стека)\n");
         printf("2| Задание 2 (Объединение двух стеков)\n");
         printf("3| Задание 3 (Вычисление выражений из файла)\n");
         printf("4| Выход\n");
-        printf("Выберите задание: ");
+        printf("\nВыберите задание: ");
         choice = correct_choice(choice);
 
         switch (choice) {
