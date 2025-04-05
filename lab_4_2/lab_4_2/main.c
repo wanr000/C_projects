@@ -17,19 +17,16 @@
 #define MAX_EXPR_LEN 256
 
 
-void task1() {
+void frequent_stack_element() {
     printf("\nЗадание 1:\n");
     
-    // Ввод размера стека
     int capacity;
     printf("Введите размер стека: ");
     capacity = correct_choice(capacity);
 
-    // Инициализация стека
     IntStack stack;
     initIntStack(&stack, capacity);
 
-    // Заполнение стека
     printf("Введите элементы стека (целые числа):\n");
     for (int i = 0; i < capacity; i++) {
         int num;
@@ -38,22 +35,19 @@ void task1() {
         pushInt(&stack, num);
     }
 
-    // Поиск самого частого элемента
     int most_frequent = findMostFrequentElement(&stack);
     
-    // Вывод результата
     if (most_frequent != INT_MIN) {
         printf("Самый часто повторяющийся элемент: %d\n", most_frequent);
     } else {
         printf("Стек пуст!\n");
     }
 
-    // Освобождение памяти
     freeIntStack(&stack);
 }
 
 
-void task2() {
+void Merging_two_stacks() {
     printf("\nЗадание 2:\n");
 
     int capacity;
@@ -98,14 +92,9 @@ void task2() {
          i++;
     }
 
-    // Объединение стеков с использованием trueCopyStack и новой логики
-    // Исходные stack1 и stack2 НЕ изменяются.
-    // result будет сформирован так, что наименьший элемент окажется на вершине.
     mergeAscendingStacks(&stack1, &stack2, &result);
-
     printf("\nРезультат объединения (по возрастанию):\n");
     while (!isIntStackEmpty(&result)) {
-        // popInt будет извлекать min, затем следующий и т.д.
         printf("%d ", popInt(&result));
     }
     printf("\n");
@@ -116,7 +105,7 @@ void task2() {
 }
 
 
-void task3() {
+void Evaluating_expressions_from_file() {
     printf("\nЗадание 3\n");
     FILE *input = fopen("input.txt", "r");
     FILE *output = fopen("output.txt", "w");
@@ -148,22 +137,22 @@ void task3() {
 int main() {
     int choice;
     do {
-        printf("\n=================== Меню ===================\n");
-        printf("1| Задание 1 (Самый часто повторяющийся элемент стека)\n");
-        printf("2| Задание 2 (Объединение двух стеков)\n");
-        printf("3| Задание 3 (Вычисление выражений из файла)\n");
-        printf("4| Выход\n");
+        printf("\n========================= Меню ========================\n");
+        printf("|1| Задание 1 (Самый часто повторяющийся элемент стека)\n");
+        printf("|2| Задание 2 (Объединение двух стеков)\n");
+        printf("|3| Задание 3 (Вычисление выражений из файла)\n");
+        printf("|4| Выход\n");
         printf("\nВыберите задание: ");
         choice = correct_choice(choice);
 
         switch (choice) {
-            case 1: task1(); break;
-            case 2: task2(); break;
-            case 3: task3(); break;
+            case 1: frequent_stack_element(); break;
+            case 2: Merging_two_stacks(); break;
+            case 3: Evaluating_expressions_from_file(); break;
             case 4: printf("Выход...\n"); break;
             default: printf("Неверный выбор!\n");
         }
+        printf("\n");
     } while (choice != 4);
-
     return 0;
 }
