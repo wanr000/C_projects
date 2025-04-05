@@ -62,7 +62,7 @@ void Merging_two_stacks() {
     IntStack stack1, stack2, result;
     initIntStack(&stack1, capacity);
     initIntStack(&stack2, capacity);
-    initIntStack(&result, capacity * 2); // result может быть вдвое больше
+    initIntStack(&result, capacity * 2);
 
     
     printf("Заполните первый стек из %d элементов, строго по возрастанию:\n\n", capacity);
