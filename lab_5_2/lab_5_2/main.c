@@ -21,24 +21,24 @@ int main() {
     char inputStr[100];
 
     printf("Выберите задание (1-3): ");
-    scanf("%d", &choice);
+    choice = correct_choice(choice);
 
     switch (choice) {
         case 1: {
             // Задание 1: Очередь символов
             printf("Введите максимальный размер очереди: ");
-            scanf("%d", &size);
+            size = correct_choice(size);
             while (getchar() != '\n'); // Очистка буфера
 
             CharQueue queue;
             initQueue(&queue, size);
 
             while (true) {
-                printf("Введите символ (или 'q' для выхода): ");
+                printf("Введите символ (или '-' для выхода): ");
                 scanf("%c", &ch);
                 while (getchar() != '\n'); // Очистка буфера
 
-                if (ch == 'q') break;
+                if (ch == '-') break;
 
                 if (!isQueueFull(&queue)) {
                     // Проверка на совпадение с последним элементом
@@ -56,7 +56,7 @@ int main() {
         case 2: {
             // Задание 2: Дек символов
             printf("Введите максимальный размер дека: ");
-            scanf("%d", &size);
+            size = correct_choice(size);
             while (getchar() != '\n'); // Очистка буфера
 
             CharDeque deque;
@@ -64,11 +64,11 @@ int main() {
             bool insertAtFront = true; // Флаг для чередования вставки
 
             while (true) {
-                printf("Введите символ (или 'q' для выхода): ");
+                printf("Введите символ (или '-' для выхода): ");
                 scanf("%c", &ch);
                 while (getchar() != '\n'); // Очистка буфера
 
-                if (ch == 'q') break;
+                if (ch == '-') break;
 
                 if (!isDequeFull(&deque)) {
                     if (insertAtFront) {
