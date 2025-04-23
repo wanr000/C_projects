@@ -19,8 +19,7 @@ int correct_choice(int task) {
 
 char correct_choice_char(char task) {
     while (1) {
-        char b;
-        if (scanf("%c", &task) == 1 && (task == 'l' || task == 'r')) {
+        if (scanf(" %c", &task) == 1 && (task == 'l' || task == 'r')) {
             break;
         } else {
             printf("Некорректный ввод. Повторите еще раз: ");
@@ -174,7 +173,7 @@ void add_tree_node(TreeNode** root, int value){
 void delete_tree_node(TreeNode** root, int value){
     printf("Введите значение для удаления: ");
     value = correct_choice(value);
-    *root = insertNode(*root, value);
+    *root = deleteNode(*root, value);
 }
 
 void show_tree(TreeNode** root, int value){
