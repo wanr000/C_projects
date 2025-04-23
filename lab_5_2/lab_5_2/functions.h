@@ -273,7 +273,7 @@ void queue_for_char() {
     initQueue(&queue, size);
 
     while (true) {
-        printf("Введите символ (или '-' для выхода): ");
+        printf("\nВведите символ (или '-' для выхода): ");
         scanf("%c", &ch);
         while (getchar() != '\n');
 
@@ -281,7 +281,7 @@ void queue_for_char() {
 
         if (!isQueueFull(&queue)) {
             if (!isQueueEmpty(&queue) && ch == peekRear(&queue)) {
-                printf("Первый элемент очереди: %c\n", peekFront(&queue));
+                printf("\nПервый элемент очереди: %c\n", peekFront(&queue));
             }
             enqueue(&queue, ch);
             displayQueue(&queue);
@@ -302,7 +302,7 @@ void dec_for_char() {
     bool insertAtFront = true;
 
     while (true) {
-        printf("Введите символ (или '-' для выхода): ");
+        printf("\nВведите символ (или '-' для выхода): ");
         scanf("%c", &ch);
         while (getchar() != '\n');
 
@@ -320,6 +320,8 @@ void dec_for_char() {
                 }
                 insertRear(&deque, ch);
             }
+
+
             insertAtFront = !insertAtFront;
             displayDeque(&deque);
         } else {
@@ -327,6 +329,7 @@ void dec_for_char() {
         }
     }
 }
+
 
 void which_lines_are_symmetrical() {
     char inputStr[100];

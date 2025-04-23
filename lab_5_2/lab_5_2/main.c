@@ -31,6 +31,7 @@ int main() {
             case 1: queue_for_char(); break;
             case 2: dec_for_char(); break;
             case 3: which_lines_are_symmetrical(); break;
+            case 4: printf("Выход...\n"); break;
             default: printf("Неверный выбор.\n");
         }
         printf("\n");
