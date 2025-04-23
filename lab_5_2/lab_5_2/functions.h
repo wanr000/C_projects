@@ -1,10 +1,8 @@
-// Структура для узла очереди
 typedef struct QueueNode {
     char data;
     struct QueueNode* next;
 } QueueNode;
 
-// Структура для очереди
 typedef struct {
     QueueNode* front;
     QueueNode* rear;
@@ -12,19 +10,16 @@ typedef struct {
     int currentSize;
 } CharQueue;
 
-// Инициализация очереди
 void initQueue(CharQueue* q, int size) {
     q->front = q->rear = NULL;
     q->maxSize = size;
     q->currentSize = 0;
 }
 
-// Проверка на пустоту очереди
 bool isQueueEmpty(CharQueue* q) {
     return q->currentSize == 0;
 }
 
-// Проверка на переполнение очереди
 bool isQueueFull(CharQueue* q) {
     return q->currentSize == q->maxSize;
 }
@@ -42,7 +37,6 @@ int correct_choice(int task) {
     return task;
 }
 
-// Добавление элемента в очередь
 void enqueue(CharQueue* q, char ch) {
     if (isQueueFull(q)) {
         printf("Очередь переполнена!\n");
@@ -62,7 +56,6 @@ void enqueue(CharQueue* q, char ch) {
     q->currentSize++;
 }
 
-// Удаление элемента из очереди
 char dequeue(CharQueue* q) {
     if (isQueueEmpty(q)) {
         printf("Очередь пуста!\n");
@@ -82,7 +75,6 @@ char dequeue(CharQueue* q) {
     return ch;
 }
 
-// Получение первого элемента очереди
 char peekFront(CharQueue* q) {
     if (isQueueEmpty(q)) {
         return '\0';
@@ -90,7 +82,6 @@ char peekFront(CharQueue* q) {
     return q->front->data;
 }
 
-// Получение последнего элемента очереди
 char peekRear(CharQueue* q) {
     if (isQueueEmpty(q)) {
         return '\0';
@@ -98,7 +89,6 @@ char peekRear(CharQueue* q) {
     return q->rear->data;
 }
 
-// Вывод содержимого очереди
 void displayQueue(CharQueue* q) {
     if (isQueueEmpty(q)) {
         printf("Очередь пуста.\n");
@@ -114,14 +104,12 @@ void displayQueue(CharQueue* q) {
     printf("\n");
 }
 
-// Структура для узла дека
 typedef struct DequeNode {
     char data;
     struct DequeNode* next;
     struct DequeNode* prev;
 } DequeNode;
 
-// Структура для дека
 typedef struct {
     DequeNode* front;
     DequeNode* rear;
@@ -129,24 +117,20 @@ typedef struct {
     int currentSize;
 } CharDeque;
 
-// Инициализация дека
 void initDeque(CharDeque* dq, int size) {
     dq->front = dq->rear = NULL;
     dq->maxSize = size;
     dq->currentSize = 0;
 }
 
-// Проверка на пустоту дека
 bool isDequeEmpty(CharDeque* dq) {
     return dq->currentSize == 0;
 }
 
-// Проверка на переполнение дека
 bool isDequeFull(CharDeque* dq) {
     return dq->currentSize == dq->maxSize;
 }
 
-// Добавление элемента в начало дека
 void insertFront(CharDeque* dq, char ch) {
     if (isDequeFull(dq)) {
         printf("Дек переполнен!\n");
@@ -168,7 +152,6 @@ void insertFront(CharDeque* dq, char ch) {
     dq->currentSize++;
 }
 
-// Добавление элемента в конец дека
 void insertRear(CharDeque* dq, char ch) {
     if (isDequeFull(dq)) {
         printf("Дек переполнен!\n");
@@ -190,7 +173,6 @@ void insertRear(CharDeque* dq, char ch) {
     dq->currentSize++;
 }
 
-// Удаление элемента из начала дека
 char deleteFront(CharDeque* dq) {
     if (isDequeEmpty(dq)) {
         printf("Дек пуст!\n");
@@ -212,7 +194,6 @@ char deleteFront(CharDeque* dq) {
     return ch;
 }
 
-// Удаление элемента из конца дека
 char deleteRear(CharDeque* dq) {
     if (isDequeEmpty(dq)) {
         printf("Дек пуст!\n");
@@ -234,7 +215,6 @@ char deleteRear(CharDeque* dq) {
     return ch;
 }
 
-// Получение первого элемента дека
 char getFront(CharDeque* dq) {
     if (isDequeEmpty(dq)) {
         return '\0';
@@ -242,7 +222,6 @@ char getFront(CharDeque* dq) {
     return dq->front->data;
 }
 
-// Получение последнего элемента дека
 char getRear(CharDeque* dq) {
     if (isDequeEmpty(dq)) {
         return '\0';
@@ -250,7 +229,6 @@ char getRear(CharDeque* dq) {
     return dq->rear->data;
 }
 
-// Вывод содержимого дека
 void displayDeque(CharDeque* dq) {
     if (isDequeEmpty(dq)) {
         printf("Дек пуст.\n");
@@ -266,18 +244,15 @@ void displayDeque(CharDeque* dq) {
     printf("\n");
 }
 
-// Функция для проверки симметричности строки с использованием очереди
 bool isSymmetricString(const char* str) {
     int len = strlen(str);
     CharQueue q;
     initQueue(&q, len);
 
-    // Помещаем все символы в очередь
     for (int i = 0; i < len; i++) {
         enqueue(&q, str[i]);
     }
 
-    // Сравниваем символы с начала и конца
     for (int i = 0; i < len / 2; i++) {
         char front = dequeue(&q);
         if (front != str[len - 1 - i]) {
