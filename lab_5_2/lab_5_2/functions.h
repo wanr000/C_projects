@@ -287,3 +287,81 @@ bool isSymmetricString(const char* str) {
 
     return true;
 }
+
+void queue_for_char() {
+    int size;
+    char ch;
+    printf("Введите максимальный размер очереди: ");
+    size = correct_choice(size);
+
+    CharQueue queue;
+    initQueue(&queue, size);
+
+    while (true) {
+        printf("Введите символ (или '-' для выхода): ");
+        scanf("%c", &ch);
+        while (getchar() != '\n');
+
+        if (ch == '-') break;
+
+        if (!isQueueFull(&queue)) {
+            if (!isQueueEmpty(&queue) && ch == peekRear(&queue)) {
+                printf("Первый элемент очереди: %c\n", peekFront(&queue));
+            }
+            enqueue(&queue, ch);
+            displayQueue(&queue);
+        } else {
+            printf("Очередь переполнена!\n");
+        }
+    }
+}
+
+void dec_for_char() {
+    int size;
+    char ch;
+    printf("Введите максимальный размер дека: ");
+    size = correct_choice(size);
+
+    CharDeque deque;
+    initDeque(&deque, size);
+    bool insertAtFront = true;
+
+    while (true) {
+        printf("Введите символ (или '-' для выхода): ");
+        scanf("%c", &ch);
+        while (getchar() != '\n');
+
+        if (ch == '-') break;
+
+        if (!isDequeFull(&deque)) {
+            if (insertAtFront) {
+                if (!isDequeEmpty(&deque) && ch == getRear(&deque)) {
+                    printf("Элемент на другом конце: %c\n", getRear(&deque));
+                }
+                insertFront(&deque, ch);
+            } else {
+                if (!isDequeEmpty(&deque) && ch == getFront(&deque)) {
+                    printf("Элемент на другом конце: %c\n", getFront(&deque));
+                }
+                insertRear(&deque, ch);
+            }
+            insertAtFront = !insertAtFront;
+            displayDeque(&deque);
+        } else {
+            printf("Дек переполнен!\n");
+        }
+    }
+}
+
+void which_lines_are_symmetrical() {
+    char inputStr[100];
+    printf("Введите строку для проверки на симметричность: ");
+    fgets(inputStr, sizeof(inputStr), stdin);
+    inputStr[strcspn(inputStr, "\n")] = '\0';
+
+    if (isSymmetricString(inputStr)) {
+        printf("Строка симметрична.\n");
+    } else {
+        printf("Строка не симметрична.\n");
+    }
+}

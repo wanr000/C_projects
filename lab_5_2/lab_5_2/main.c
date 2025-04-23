@@ -16,99 +16,26 @@
 
 
 int main() {
-    int choice, size;
-    char ch;
-    char inputStr[100];
-
-    printf("Выберите задание (1-3): ");
-    choice = correct_choice(choice);
-
-    switch (choice) {
-        case 1: {
-            // Задание 1: Очередь символов
-            printf("Введите максимальный размер очереди: ");
-            size = correct_choice(size);
-            while (getchar() != '\n'); // Очистка буфера
-
-            CharQueue queue;
-            initQueue(&queue, size);
-
-            while (true) {
-                printf("Введите символ (или '-' для выхода): ");
-                scanf("%c", &ch);
-                while (getchar() != '\n'); // Очистка буфера
-
-                if (ch == '-') break;
-
-                if (!isQueueFull(&queue)) {
-                    // Проверка на совпадение с последним элементом
-                    if (!isQueueEmpty(&queue) && ch == peekRear(&queue)) {
-                        printf("Первый элемент очереди: %c\n", peekFront(&queue));
-                    }
-                    enqueue(&queue, ch);
-                    displayQueue(&queue);
-                } else {
-                    printf("Очередь переполнена!\n");
-                }
-            }
-            break;
+    int choice;
+    do{
+        printf("\n========================= Меню ========================\n");
+        printf("|1| Задание 1 (Cоздать очередь для символов)\n");
+        printf("|2| Задание 2 (Cоздать дек для символов)\n");
+        printf("|3| Задание 3 (Проверить строки на симметричность)\n");
+        printf("|4| Выход\n");
+        printf("\nВыберите задание: ");
+        
+        choice = correct_choice(choice);
+        
+        switch (choice) {
+            case 1: queue_for_char(); break;
+            case 2: dec_for_char(); break;
+            case 3: which_lines_are_symmetrical(); break;
+            default: printf("Неверный выбор.\n");
         }
-        case 2: {
-            // Задание 2: Дек символов
-            printf("Введите максимальный размер дека: ");
-            size = correct_choice(size);
-            while (getchar() != '\n'); // Очистка буфера
-
-            CharDeque deque;
-            initDeque(&deque, size);
-            bool insertAtFront = true; // Флаг для чередования вставки
-
-            while (true) {
-                printf("Введите символ (или '-' для выхода): ");
-                scanf("%c", &ch);
-                while (getchar() != '\n'); // Очистка буфера
-
-                if (ch == '-') break;
-
-                if (!isDequeFull(&deque)) {
-                    if (insertAtFront) {
-                        // Проверка на совпадение с противоположным концом
-                        if (!isDequeEmpty(&deque) && ch == getRear(&deque)) {
-                            printf("Элемент на другом конце: %c\n", getRear(&deque));
-                        }
-                        insertFront(&deque, ch);
-                    } else {
-                        // Проверка на совпадение с противоположным концом
-                        if (!isDequeEmpty(&deque) && ch == getFront(&deque)) {
-                            printf("Элемент на другом конце: %c\n", getFront(&deque));
-                        }
-                        insertRear(&deque, ch);
-                    }
-                    insertAtFront = !insertAtFront; // Переключение флага
-                    displayDeque(&deque);
-                } else {
-                    printf("Дек переполнен!\n");
-                }
-            }
-            break;
-        }
-        case 3: {
-            // Задание 3: Проверка симметричности строк
-            printf("Введите строку для проверки на симметричность: ");
-            fgets(inputStr, sizeof(inputStr), stdin);
-            inputStr[strcspn(inputStr, "\n")] = '\0'; // Удаление символа новой строки
-
-            if (isSymmetricString(inputStr)) {
-                printf("Строка симметрична.\n");
-            } else {
-                printf("Строка не симметрична.\n");
-            }
-            break;
-        }
-        default:
-            printf("Неверный выбор.\n");
+        printf("\n");
     }
+    while (choice != 4);
 
     return 0;
 }
-
