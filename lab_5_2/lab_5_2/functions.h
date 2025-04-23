@@ -255,7 +255,8 @@ bool isSymmetricString(const char* str) {
 
     for (int i = 0; i < len / 2; i++) {
         char front = dequeue(&q);
-        if (front != str[len - 1 - i]) {
+        char rear = str[len - 1 - i];
+        if (front != rear) {
             return false;
         }
     }
