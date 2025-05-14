@@ -4,8 +4,9 @@
 #include <stdint.h>
 
 #define TABLE_SIZE 100
+#define DEBUG_MODE 1  // 1 - вывод дополнительной информации, 0 - только сумма
 
-// Простая хэш-функция (для примера)
+// Хэш-функция
 uint32_t simple_hash(const char *str) {
     uint32_t hash = 5381;
     int c;
@@ -17,47 +18,54 @@ uint32_t simple_hash(const char *str) {
     return hash;
 }
 
-// Структура для хранения данных пользователя
+// Структура пользователя
 typedef struct User {
     char login[50];
+    uint32_t login_hash;
     uint32_t password_hash;
-    struct User* next; // Для разрешения коллизий методом цепочек
+    uint32_t combined_hash; // Новое поле для суммы хэшей
+    struct User* next;
 } User;
 
-// Хеш-таблица пользователей
 User* user_table[TABLE_SIZE];
 
-// Инициализация хеш-таблицы
+// Инициализация таблицы
 void init_table() {
     for (int i = 0; i < TABLE_SIZE; i++) {
         user_table[i] = NULL;
     }
 }
 
-// Добавление пользователя в хеш-таблицу
-void add_user(const char* login, uint32_t password_hash) {
+// Добавление пользователя
+void add_user(const char* login, uint32_t pwd_hash) {
     uint32_t index = simple_hash(login) % TABLE_SIZE;
     
     User* new_user = (User*)malloc(sizeof(User));
     strncpy(new_user->login, login, 49);
     new_user->login[49] = '\0';
-    new_user->password_hash = password_hash;
+    new_user->login_hash = simple_hash(login);
+    new_user->password_hash = pwd_hash;
+    new_user->combined_hash = new_user->login_hash + new_user->password_hash; // Сумма хэшей
     new_user->next = NULL;
     
-    // Если ячейка пуста
     if (user_table[index] == NULL) {
         user_table[index] = new_user;
     } else {
-        // Разрешение коллизий методом цепочек
         User* current = user_table[index];
         while (current->next != NULL) {
             current = current->next;
         }
         current->next = new_user;
     }
+
+    #if DEBUG_MODE
+    printf("Добавлен пользователь:\n");
+    printf("Логин: %s\n", login);
+    #endif
+    printf("Хэш-сумма логина и пароля: %u\n\n", new_user->combined_hash);
 }
 
-// Поиск пользователя по логину
+// Поиск пользователя
 User* find_user(const char* login) {
     uint32_t index = simple_hash(login) % TABLE_SIZE;
     User* current = user_table[index];
@@ -72,52 +80,76 @@ User* find_user(const char* login) {
     return NULL;
 }
 
-// Функция регистрации нового пользователя
+// Регистрация
 void register_user() {
     char login[50];
     char password[50];
     
-    printf("Регистрация нового пользователя\n");
+    printf("\n--- Регистрация ---\n");
     printf("Введите логин: ");
     scanf("%49s", login);
     
-    // Проверка, не занят ли логин
     if (find_user(login) != NULL) {
-        printf("Ошибка: пользователь с таким логином уже существует!\n");
+        printf("Ошибка: логин уже занят!\n");
         return;
     }
     
     printf("Введите пароль: ");
     scanf("%49s", password);
     
-    // Добавляем пользователя в таблицу
-    add_user(login, simple_hash(password));
-    
-    printf("Пользователь зарегистрирован!\n\n");
+    uint32_t pwd_hash = simple_hash(password);
+    add_user(login, pwd_hash);
+    printf("Регистрация завершена!\n");
 }
 
-// Функция авторизации пользователя
+// Авторизация
 void authenticate() {
     char login[50];
     char password[50];
     
-    printf("Авторизация\n");
+    printf("\n--- Авторизация ---\n");
     printf("Введите логин: ");
     scanf("%49s", login);
+    
+    User* user = find_user(login);
+    if (user == NULL) {
+        printf("Ошибка: пользователь не найден!\n");
+        return;
+    }
     
     printf("Введите пароль: ");
     scanf("%49s", password);
     
-    User* user = find_user(login);
-    if (user == NULL) {
-        printf("Ошибка авторизации: пользователь не найден\n");
-        return;
-    }
+    uint32_t input_login_hash = simple_hash(login);
+    uint32_t input_pwd_hash = simple_hash(password);
+    uint32_t input_combined_hash = input_login_hash + input_pwd_hash;
     
-    if (user->password_hash == simple_hash(password)) {
-        printf("Авторизация успешна! Добро пожаловать, %s!\n", user->login);
+    #if DEBUG_MODE
+    printf("\nОтладочная информация:\n");
+    #endif
+    printf("Хэш-сумма логина и пароля: %u\n", input_combined_hash);
+    printf("Ожидаемая сумма: %u\n", user->combined_hash);
+    
+    if (user->password_hash == input_pwd_hash) {
+        printf("\nУспешная авторизация! Добро пожаловать, %s!\n", user->login);
     } else {
-        printf("Ошибка авторизации: неверный пароль\n");
+        printf("\nОшибка: неверный пароль!\n");
+    }
+}
+
+// Просмотр всех пользователей (для отладки)
+void show_all_users() {
+    printf("\n--- Список пользователей ---\n");
+    for (int i = 0; i < TABLE_SIZE; i++) {
+        User* current = user_table[i];
+        while (current != NULL) {
+            printf("Логин: %s\n", current->login);
+            #if DEBUG_MODE
+            #endif
+            printf("Хэш-сумма логина и пароля: %u\n", current->combined_hash);
+            printf("-----------------\n");
+            current = current->next;
+        }
     }
 }
 
@@ -138,10 +170,12 @@ int main() {
     int choice;
     
     do {
-        printf("\n1. Регистрация\n");
+        printf("\n=== Меню ===\n");
+        printf("1. Регистрация\n");
         printf("2. Авторизация\n");
-        printf("3. Выход\n");
-        printf("Выберите действие: ");
+        printf("3. Показать всех пользователей (отладка)\n");
+        printf("4. Выход\n");
+        printf("Выберите: ");
         scanf("%d", &choice);
         
         switch (choice) {
@@ -152,12 +186,15 @@ int main() {
                 authenticate();
                 break;
             case 3:
-                printf("Выход из программы\n");
+                show_all_users();
+                break;
+            case 4:
+                printf("Завершение работы...\n");
                 break;
             default:
-                printf("Неверный выбор\n");
+                printf("Неверный выбор!\n");
         }
-    } while (choice != 3);
+    } while (choice != 4);
     
     free_table();
     return 0;
