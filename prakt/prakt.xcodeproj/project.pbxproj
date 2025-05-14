@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXCopyFilesBuildPhase section */
-		308BBE832DD5201B00D90AA8 /* CopyFiles */ = {
+		308BBE962DD5226000D90AA8 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = /usr/share/man/man1/;
@@ -19,19 +19,19 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		308BBE852DD5201B00D90AA8 /* silich */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = silich; sourceTree = BUILT_PRODUCTS_DIR; };
+		308BBE982DD5226000D90AA8 /* prakt */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = prakt; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		308BBE872DD5201B00D90AA8 /* silich */ = {
+		308BBE9A2DD5226000D90AA8 /* prakt */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = silich;
+			path = prakt;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		308BBE822DD5201B00D90AA8 /* Frameworks */ = {
+		308BBE952DD5226000D90AA8 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -41,18 +41,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		308BBE7C2DD5201B00D90AA8 = {
+		308BBE8F2DD5226000D90AA8 = {
 			isa = PBXGroup;
 			children = (
-				308BBE872DD5201B00D90AA8 /* silich */,
-				308BBE862DD5201B00D90AA8 /* Products */,
+				308BBE9A2DD5226000D90AA8 /* prakt */,
+				308BBE992DD5226000D90AA8 /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		308BBE862DD5201B00D90AA8 /* Products */ = {
+		308BBE992DD5226000D90AA8 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				308BBE852DD5201B00D90AA8 /* silich */,
+				308BBE982DD5226000D90AA8 /* prakt */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -60,63 +60,63 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		308BBE842DD5201B00D90AA8 /* silich */ = {
+		308BBE972DD5226000D90AA8 /* prakt */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 308BBE8C2DD5201B00D90AA8 /* Build configuration list for PBXNativeTarget "silich" */;
+			buildConfigurationList = 308BBE9F2DD5226000D90AA8 /* Build configuration list for PBXNativeTarget "prakt" */;
 			buildPhases = (
-				308BBE812DD5201B00D90AA8 /* Sources */,
-				308BBE822DD5201B00D90AA8 /* Frameworks */,
-				308BBE832DD5201B00D90AA8 /* CopyFiles */,
+				308BBE942DD5226000D90AA8 /* Sources */,
+				308BBE952DD5226000D90AA8 /* Frameworks */,
+				308BBE962DD5226000D90AA8 /* CopyFiles */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				308BBE872DD5201B00D90AA8 /* silich */,
+				308BBE9A2DD5226000D90AA8 /* prakt */,
 			);
-			name = silich;
+			name = prakt;
 			packageProductDependencies = (
 			);
-			productName = silich;
-			productReference = 308BBE852DD5201B00D90AA8 /* silich */;
+			productName = prakt;
+			productReference = 308BBE982DD5226000D90AA8 /* prakt */;
 			productType = "com.apple.product-type.tool";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		308BBE7D2DD5201B00D90AA8 /* Project object */ = {
+		308BBE902DD5226000D90AA8 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastUpgradeCheck = 1600;
 				TargetAttributes = {
-					308BBE842DD5201B00D90AA8 = {
+					308BBE972DD5226000D90AA8 = {
 						CreatedOnToolsVersion = 16.0;
 					};
 				};
 			};
-			buildConfigurationList = 308BBE802DD5201B00D90AA8 /* Build configuration list for PBXProject "silich" */;
+			buildConfigurationList = 308BBE932DD5226000D90AA8 /* Build configuration list for PBXProject "prakt" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
 				Base,
 			);
-			mainGroup = 308BBE7C2DD5201B00D90AA8;
+			mainGroup = 308BBE8F2DD5226000D90AA8;
 			minimizedProjectReferenceProxies = 1;
 			preferredProjectObjectVersion = 77;
-			productRefGroup = 308BBE862DD5201B00D90AA8 /* Products */;
+			productRefGroup = 308BBE992DD5226000D90AA8 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				308BBE842DD5201B00D90AA8 /* silich */,
+				308BBE972DD5226000D90AA8 /* prakt */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXSourcesBuildPhase section */
-		308BBE812DD5201B00D90AA8 /* Sources */ = {
+		308BBE942DD5226000D90AA8 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -126,7 +126,7 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
-		308BBE8A2DD5201B00D90AA8 /* Debug */ = {
+		308BBE9D2DD5226000D90AA8 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -187,7 +187,7 @@
 			};
 			name = Debug;
 		};
-		308BBE8B2DD5201B00D90AA8 /* Release */ = {
+		308BBE9E2DD5226000D90AA8 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -241,7 +241,7 @@
 			};
 			name = Release;
 		};
-		308BBE8D2DD5201B00D90AA8 /* Debug */ = {
+		308BBEA02DD5226000D90AA8 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
@@ -249,7 +249,7 @@
 			};
 			name = Debug;
 		};
-		308BBE8E2DD5201B00D90AA8 /* Release */ = {
+		308BBEA12DD5226000D90AA8 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
@@ -260,25 +260,25 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		308BBE802DD5201B00D90AA8 /* Build configuration list for PBXProject "silich" */ = {
+		308BBE932DD5226000D90AA8 /* Build configuration list for PBXProject "prakt" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				308BBE8A2DD5201B00D90AA8 /* Debug */,
-				308BBE8B2DD5201B00D90AA8 /* Release */,
+				308BBE9D2DD5226000D90AA8 /* Debug */,
+				308BBE9E2DD5226000D90AA8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		308BBE8C2DD5201B00D90AA8 /* Build configuration list for PBXNativeTarget "silich" */ = {
+		308BBE9F2DD5226000D90AA8 /* Build configuration list for PBXNativeTarget "prakt" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				308BBE8D2DD5201B00D90AA8 /* Debug */,
-				308BBE8E2DD5201B00D90AA8 /* Release */,
+				308BBEA02DD5226000D90AA8 /* Debug */,
+				308BBEA12DD5226000D90AA8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = 308BBE7D2DD5201B00D90AA8 /* Project object */;
+	rootObject = 308BBE902DD5226000D90AA8 /* Project object */;
 }
